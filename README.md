@@ -245,13 +245,21 @@ Existing deployments need a site migration to carry over settings, role assignme
 
 ## Team messaging and WhatsApp
 
-After updating, install the updated Python requirements, run `bench --site your-site migrate`, rebuild the app assets, and restart the web and background workers. Assign **ASK ESAFE AI Messaging User** to the enabled Desk users who should use **Messages** and **Notifications**. The launcher loads automatically throughout Desk. For a custom frontend hosted on the same Frappe origin, add this script once to the authenticated shared layout:
+The **Skills** tab includes **Create a Purchase Order**. Upload a PDF, JPG, or PNG quotation or order document, then choose **Scan and review**. The assistant uses the configured vision model to extract details, matches permitted ERPNext records, asks about missing values, and prepares a draft Purchase Order for explicit confirmation. A System Manager can edit the installed **Create Purchase Orders from scans** skill. The default allowed roles are System Manager, Purchase Manager, and Purchase User, and users also need ASK ESAFE AI access and permission to create Purchase Orders. Enable file uploads and Agent mode in Settings. The skill is installed automatically during installation or migration and preserves later edits.
+
+After updating, install the updated Python requirements, run `bench --site your-site migrate`, rebuild the app assets, and restart the web and background workers. Assign **ASK ESAFE AI Messaging User** to the enabled Desk users who should use **Messages** and **Notifications**. The launcher loads automatically throughout Desk. Signed-in users with **ASK ESAFE AI User** also get the full assistant on Frappe-served HTML pages, including `/pos#/`, through the website hook and an HTML response hook. No POS source changes are needed when Frappe serves the page.
+
+For a custom frontend served directly by a web server (bypassing Frappe's HTML response hooks), add this script once to its shared layout:
 
 ```html
-<script defer src="/assets/ask_esafe_ai/js/messaging.js"></script>
+<script defer src="/assets/ask_esafe_ai/js/website_widget.js"></script>
 ```
 
-Standard Frappe website pages also load the widget automatically for eligible signed-in users. The standalone widget uses the same site session and refreshes in the foreground when the frontend has no Frappe realtime client. Team uploads use private encrypted site storage. Keep the site's Frappe encryption key with file and database backups so restored uploads remain readable.
+The custom-page launcher opens the existing Desk assistant in a same-origin frame, preserving the signed-in session, conversations, attachments, Agent mode, messaging, notifications, and configured WhatsApp access. The frame isolates Desk styles from POS styles. Only the host path and hash route are supplied as page context; POS form/customer/payment contents are not copied. Backend Agent proposals still require the normal confirmation; Desk form actions cannot edit custom POS controls. Existing session, role, and server permission checks apply. Guests do not get a launcher. The frame loads only when the launcher is opened and remains mounted when closed, preserving the draft.
+
+This covers routes and domain aliases served by the installed Frappe site. A separate site/origin needs the app installed and its own authenticated session; this does not enable cross-origin embedding or relax CORS, CSP, or frame restrictions. Reload custom app pages after deployment. If a custom app uses a service worker to cache its HTML shell, refresh that shell through the app's normal update mechanism.
+
+Team uploads use private encrypted site storage. Keep the site's Frappe encryption key with file and database backups so restored uploads remain readable.
 
 To enable the two-way inbox, open **ASK ESAFE AI WhatsApp Settings** as a System Manager and enter the Meta Graph API version, business phone-number ID, access token, app secret, and a webhook verification token. In Meta's app, set the callback to `/api/method/ask_esafe_ai.ask_esafe_ai.whatsapp.webhook` on your HTTPS site, supply the matching verification token, and subscribe the business account to the `messages` webhook field. Enable the inbox and assign **ASK ESAFE AI WhatsApp Agent** to the staff handling customer messages. Start with Meta's test number before switching to the production number.
 

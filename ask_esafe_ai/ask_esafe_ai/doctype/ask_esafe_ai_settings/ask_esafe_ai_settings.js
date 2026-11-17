@@ -11,6 +11,10 @@ const VISION_PROVIDER_FIELDS = [
 ];
 
 frappe.ui.form.on("ASK ESAFE AI Settings", {
+	async after_save() {
+		await window.ask_esafe_aiWidget?.refreshConfiguration?.();
+	},
+
 	async refresh(frm) {
 		await refresh_model_options(frm);
 	},

@@ -94,6 +94,7 @@ def get_support_phone_uri(phone_number: str | None) -> str:
 	return f"tel:{prefix}{digits_only}"
 
 
+@frappe.whitelist()
 def get_ask_esafe_ai_boot_payload() -> dict:
 	settings_available = frappe.db.exists("DocType", "ASK ESAFE AI Settings")
 	configured = False

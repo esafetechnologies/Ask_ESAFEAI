@@ -1,0 +1,18 @@
+/* This stylesheet is loaded only inside the custom-app assistant frame. */
+html, body { height: 100%; overflow: hidden !important; background: #f3f9ff !important; }
+.main-section, .app-desk, .desk-container, .workspace-sidebar, .splash,
+#splash, #build-events-overlay, .ask_esafe_ai-bubble, .ask_esafe_ai-resize-handle,
+.ask_esafe_ai-close { display: none !important; }
+.ask_esafe_ai-root { position: static !important; }
+.ask_esafe_ai-panel {
+	position: fixed !important;
+	inset: 0 !important;
+	width: 100% !important;
+	height: 100% !important;
+	max-width: none !important;
+	max-height: none !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+}
+.ask_esafe_ai-actions { padding-right: 36px; }

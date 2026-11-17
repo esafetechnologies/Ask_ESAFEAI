@@ -80,7 +80,7 @@
 
 .ask_esafe_ai-tabs:has(.esafe-messaging-tab) {
 	display: flex;
-	flex-wrap: wrap;
+	flex-wrap: nowrap;
 	gap: 0.25rem;
 	padding: 0;
 	list-style: none;
@@ -131,7 +131,7 @@
 .esafe-messaging-form {
 	min-height: 0;
 	overflow-y: auto;
-	padding: 0.65rem 0.8rem;
+	padding: 1rem 1.15rem;
 }
 
 .esafe-messaging-transcript {
@@ -143,7 +143,37 @@
 .esafe-messaging-field {
 	display: flex;
 	flex-direction: column;
-	gap: 0.45rem;
+	gap: 0.65rem;
+}
+
+.esafe-messaging-form {
+	gap: 1rem;
+}
+
+.esafe-messaging-field {
+	font-size: 0.82rem;
+	font-weight: 500;
+}
+
+.esafe-messaging-field input,
+.esafe-messaging-field select {
+	width: 100%;
+}
+
+.esafe-messaging-form > button:first-child {
+	align-self: flex-start;
+	padding-inline: 0;
+	border: 0;
+	background: transparent;
+	color: var(--text-muted, #63788a);
+}
+
+.esafe-messaging-form > button:last-child {
+	padding: 0.65rem 1rem;
+	border: 0;
+	background: #087f86;
+	color: white;
+	font-weight: 600;
 }
 
 .esafe-messaging-composer {
@@ -166,12 +196,13 @@
 .esafe-messaging-view select {
 	max-width: 100%;
 	min-height: 2rem;
-	padding: 0.3rem 0.55rem;
-	border: 1px solid var(--border-color, #cbd5e1);
-	border-radius: 0.4rem;
+	padding: 0.5rem 0.7rem;
+	border: 1px solid var(--border-color, #cfdee8);
+	border-radius: 0.55rem;
 	color: inherit;
 	background: var(--control-bg, var(--bg-color, white));
 	font: inherit;
+	font-size: 0.85rem;
 }
 
 .esafe-messaging-panel button:not(:disabled),

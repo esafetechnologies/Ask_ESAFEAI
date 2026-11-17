@@ -1,4 +1,5 @@
 import { render as renderPele } from "pele";
+import { PurchaseOrderScan } from "./purchase_order_scan";
 import "./field_agent";
 
 (function () {
@@ -1126,6 +1127,7 @@ import "./field_agent";
 			this.inputEl.addEventListener("input", () => this.autoResizeInput());
 			this.updateVoiceInputHint();
 			this.autoResizeInput();
+			this.purchaseOrderScan = new PurchaseOrderScan(this);
 			this.setActiveTab(this.state.activeTab);
 		}
 
@@ -1197,12 +1199,27 @@ import "./field_agent";
 				},
 			});
 			const askEsafeAiBoot = response.message.ask_esafe_ai || {};
-			frappe.boot.ask_esafe_ai = { ...frappe.boot.ask_esafe_ai, ...askEsafeAiBoot };
+			this.applyConfiguration(askEsafeAiBoot);
 			await this.applyConversation(response.message.conversation);
 			this.syncSupportPhoneAction(askEsafeAiBoot);
 			this.syncFileUploadButton();
 			await this.refreshConversationList();
 
+		}
+
+		async refreshConfiguration() {
+			const response = await frappe.call({
+				method: "ask_esafe_ai.api.get_ask_esafe_ai_boot_payload",
+			});
+			this.applyConfiguration(response.message || {});
+		}
+
+		applyConfiguration(askEsafeAiBoot) {
+			frappe.boot.ask_esafe_ai = { ...frappe.boot.ask_esafe_ai, ...askEsafeAiBoot };
+			this.syncModeControl();
+			this.syncFileUploadButton();
+			this.syncSupportPhoneAction(askEsafeAiBoot);
+			this.warningEl.classList.toggle("ask_esafe_ai-hidden", Boolean(askEsafeAiBoot.configured));
 			if (!askEsafeAiBoot.configured) {
 				this.warningEl.classList.remove("ask_esafe_ai-hidden");
 				this.warningEl.textContent = __(
@@ -1417,14 +1434,16 @@ import "./field_agent";
 
 		setActiveTab(tabName) {
 			const collaboration = Boolean(this.collaboration?.tabs.includes(tabName));
-			const nextTab = collaboration || tabName === "history" ? tabName : "chat";
+			const skill = tabName === "skills";
+			const nextTab = collaboration || skill || tabName === "history" ? tabName : "chat";
 			this.state.activeTab = nextTab;
-			this.panel.dataset.collaboration = collaboration ? "true" : "false";
+			this.panel.dataset.collaboration = collaboration || skill ? "true" : "false";
 
 			const showHistory = nextTab === "history";
-			this.chatViewEl?.classList.toggle("ask_esafe_ai-hidden", showHistory || collaboration);
+			this.chatViewEl?.classList.toggle("ask_esafe_ai-hidden", showHistory || collaboration || skill);
 			this.historyViewEl?.classList.toggle("ask_esafe_ai-hidden", !showHistory);
 			this.collaboration?.activate(collaboration ? nextTab : null);
+			this.purchaseOrderScan?.setVisible(skill);
 
 			this.tabEls.forEach((tabEl) => {
 				const isActive = tabEl.dataset.tab === nextTab;
@@ -1540,7 +1559,7 @@ import "./field_agent";
 
 		async onFileUploaded(fileDoc, conversationName = this.state.conversation?.name) {
 			if (!fileDoc?.file_name) {
-				return;
+				return false;
 			}
 			try {
 				const response = await frappe.call({
@@ -1557,8 +1576,10 @@ import "./field_agent";
 				if (response.message?.conversation && this.state.conversation?.name === conversationName) {
 					await this.applyConversation(response.message.conversation);
 				}
+				return Boolean(response.message?.conversation);
 			} catch (error) {
 				frappe.msgprint(error.message || __("Failed to attach file to conversation."));
+				return false;
 			}
 		}
 
@@ -2012,6 +2033,7 @@ import "./field_agent";
 
 		setLoading(value) {
 			this.state.loading = value;
+			this.purchaseOrderScan?.update();
 			this.syncFileUploadButton();
 			if (!value) {
 				this.state.stopping = false;
@@ -2108,6 +2130,9 @@ import "./field_agent";
 				lang: frappe?.boot?.lang || document.documentElement.lang || "en",
 				user_defaults: { ...(frappe?.boot?.user?.defaults || {}) },
 			};
+			if (window.askEsafeHostContext && window.parent !== window) {
+				return { ...context, ...window.askEsafeHostContext };
+			}
 
 			if (frappe.session?.user !== "Administrator") {
 				context.user_roles = frappe.user_roles || [];

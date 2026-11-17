@@ -6,8 +6,11 @@ app_url = "https://github.com/esafetechnologies/Ask_ESAFEAI"
 app_license = "agpl-3.0"
 app_include_js = ["ask_esafe_ai.bundle.js", "/assets/ask_esafe_ai/js/messaging.js"]
 app_include_css = "ask_esafe_ai.bundle.css"
-web_include_js = "/assets/ask_esafe_ai/js/messaging.js"
+web_include_js = "/assets/ask_esafe_ai/js/website_widget.js"
+after_request = "ask_esafe_ai.ask_esafe_ai.website_widget.inject_widget"
 extend_bootinfo = "ask_esafe_ai.ask_esafe_ai.boot.boot_session"
+after_install = "ask_esafe_ai.ask_esafe_ai.purchase_order_scan.install_skill"
+after_migrate = "ask_esafe_ai.ask_esafe_ai.purchase_order_scan.install_skill"
 
 scheduler_events = {
 	"cron": {"*/5 * * * *": ["ask_esafe_ai.ask_esafe_ai.whatsapp.recover_queued_messages"]},

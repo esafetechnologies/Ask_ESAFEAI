@@ -300,8 +300,8 @@
 }
 
 .ask_esafe_ai-panel {
-	width: min(28rem, calc(100vw - 2rem));
-	height: min(42rem, calc(100vh - 5rem));
+	width: min(36rem, calc(100vw - 2rem));
+	height: min(48rem, calc(100dvh - 3rem));
 	min-width: min(20rem, calc(100vw - 2rem));
 	min-height: min(24rem, calc(100vh - 2rem));
 	max-width: calc(100vw - 2rem);
@@ -311,9 +311,9 @@
 	display: flex;
 	flex-direction: column;
 	background: var(--ask-esafe-ai-chat-bg);
-	border: 1px solid var(--border-color);
-	border-radius: var(--radius-lg);
-	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+	border: 1px solid color-mix(in srgb, #a7c6d7, transparent 45%);
+	border-radius: 1.15rem;
+	box-shadow: 0 18px 60px rgba(16, 43, 70, 0.16);
 	overflow: hidden;
 }
 
@@ -373,15 +373,19 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: 0.75rem;
+	padding: 1.2rem 1.35rem;
 }
 
 .ask_esafe_ai-brand {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
 	min-width: 0;
 }
 
 .ask_esafe_ai-brand-logo {
 	display: block;
-	width: 9rem;
+	width: 7rem;
 	max-width: 100%;
 	height: auto;
 }
@@ -394,7 +398,9 @@
 }
 
 .ask_esafe_ai-subtitle {
-	font-size: 0.85rem;
+	padding-inline-start: 1rem;
+	border-inline-start: 1px solid #bdd3df;
+	font-size: 0.82rem;
 	color: var(--text-muted);
 }
 
@@ -415,6 +421,41 @@
 	padding: 0 1rem;
 	border-radius: 0;
 	background: var(--bg-color);
+}
+
+.ask_esafe_ai-tabs-list .ask_esafe_ai-tabs {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 0.35rem;
+	margin: 0;
+	padding: 0;
+	overflow-x: auto;
+	list-style: none;
+	scrollbar-width: thin;
+}
+
+.ask_esafe_ai-tabs .ask_esafe_ai-tab {
+	padding: 0.8rem 0.65rem;
+	border: 0;
+	border-bottom: 2px solid transparent;
+	border-radius: 0;
+	background: transparent;
+	color: var(--text-muted, #63788a);
+	font: inherit;
+	font-size: 0.85rem;
+	white-space: nowrap;
+}
+
+.ask_esafe_ai-tabs .ask_esafe_ai-tab[aria-selected="true"] {
+	border-bottom-color: #087f86;
+	color: #087f86;
+	font-weight: 600;
+}
+
+.ask_esafe_ai-panel *,
+.ask_esafe_ai-panel *::before,
+.ask_esafe_ai-panel *::after {
+	box-sizing: border-box;
 }
 
 .ask_esafe_ai-input {
@@ -893,6 +934,32 @@
 	margin: 0;
 }
 
+.ask_esafe_ai-panel .ask_esafe_ai-tabs {
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	list-style: none;
+	padding: 0;
+}
+
+.ask_esafe_ai-panel .ask_esafe_ai-tab {
+	display: block;
+	padding: 0.9rem 0.65rem;
+	border: 0;
+	border-bottom: 2px solid transparent;
+	border-radius: 0;
+	background: transparent;
+	color: var(--text-muted, #63788a);
+	font: inherit;
+	font-size: 0.82rem;
+	white-space: nowrap;
+}
+
+.ask_esafe_ai-panel .ask_esafe_ai-tab[aria-selected="true"] {
+	border-bottom-color: #087f86;
+	color: #087f86;
+	font-weight: 600;
+}
+
 .ask_esafe_ai-proposal-details summary {
 	cursor: pointer;
 	font-size: 0.8rem;
@@ -1290,5 +1357,192 @@
 	.ask_esafe_ai-tool-call-list > li,
 	.ask_esafe_ai-tool-call-running .ask_esafe_ai-tool-call-name {
 		animation: none;
+	}
+}
+
+/* Purchase-order scanning skill */
+.ask_esafe_ai-skill-view {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	min-height: 0;
+	gap: 1.15rem;
+	padding: 1.65rem;
+	overflow-y: auto;
+	color: var(--text-color, #102b46);
+	background: var(--ask-esafe-ai-chat-bg);
+}
+
+.ask_esafe_ai-skill-view[hidden],
+.ask_esafe_ai-skill-view [hidden] {
+	display: none !important;
+}
+
+.ask_esafe_ai-skill-view h2 {
+	margin: 0;
+	font-size: 1.45rem;
+	line-height: 1.25;
+	font-weight: 650;
+	letter-spacing: -0.025em;
+}
+
+.ask_esafe_ai-skill-intro {
+	margin: -0.5rem 0 0;
+	color: var(--text-muted, #63788a);
+	font-size: 0.88rem;
+	line-height: 1.6;
+}
+
+.ask_esafe_ai-scan-upload {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.7rem;
+	padding: 1.6rem 1rem;
+	border: 1px dashed #9abecf;
+	border-radius: 0.9rem;
+	background: var(--bg-color, white);
+	text-align: center;
+}
+
+.ask_esafe_ai-scan-upload > svg {
+	width: 2.5rem;
+	height: 2.5rem;
+	color: #102b46;
+}
+
+.ask_esafe_ai-scan-upload strong {
+	font-size: 1rem;
+	overflow-wrap: anywhere;
+}
+
+.ask_esafe_ai-scan-upload small {
+	color: var(--text-muted, #63788a);
+	font-size: 0.76rem;
+}
+
+.ask_esafe_ai-scan-choose,
+.ask_esafe_ai-scan-action {
+	padding: 0.65rem 1.1rem;
+	border: 1px solid #087f86;
+	border-radius: 0.55rem;
+	background: transparent;
+	color: #087f86;
+	font: inherit;
+	font-size: 0.87rem;
+	font-weight: 600;
+}
+
+.ask_esafe_ai-scan-action {
+	width: 100%;
+	margin-top: auto;
+	background: #087f86;
+	color: white;
+}
+
+.ask_esafe_ai-skill-view button:not(:disabled) {
+	cursor: pointer;
+}
+
+.ask_esafe_ai-skill-view button:disabled {
+	opacity: 0.4;
+	cursor: default;
+}
+
+.ask_esafe_ai-scan-steps {
+	display: flex;
+	flex-direction: column;
+	gap: 0.95rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ask_esafe_ai-scan-steps li {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.ask_esafe_ai-scan-steps svg {
+	flex: 0 0 auto;
+	width: 1.5rem;
+	height: 1.5rem;
+	color: #087f86;
+}
+
+.ask_esafe_ai-scan-steps li div {
+	padding-inline-start: 0.9rem;
+	border-inline-start: 1px solid #bdd3df;
+}
+
+.ask_esafe_ai-scan-steps strong {
+	font-size: 0.89rem;
+	font-weight: 600;
+}
+
+.ask_esafe_ai-scan-steps p {
+	margin: 0.15rem 0 0;
+	color: var(--text-muted, #63788a);
+	font-size: 0.8rem;
+	line-height: 1.45;
+}
+
+.ask_esafe_ai-scan-status {
+	margin: 0;
+	color: var(--text-muted, #63788a);
+	font-size: 0.8rem;
+	line-height: 1.5;
+}
+
+.ask_esafe_ai-scan-status:empty {
+	display: none;
+}
+
+.ask_esafe_ai-scan-manage {
+	align-self: center;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: #087f86;
+	font: inherit;
+	font-size: 0.82rem;
+	text-decoration: underline;
+	text-underline-offset: 0.15rem;
+}
+
+[data-theme="dark"] .ask_esafe_ai-scan-upload > svg {
+	color: var(--text-color);
+}
+
+@media (max-width: 480px) {
+	.ask_esafe_ai-panel .ask_esafe_ai-tab {
+		padding-inline: 0.4rem;
+		font-size: 0.75rem;
+	}
+
+	.ask_esafe_ai-header {
+		padding: 1rem;
+	}
+
+	.ask_esafe_ai-brand {
+		gap: 0.65rem;
+	}
+
+	.ask_esafe_ai-subtitle {
+		padding-inline-start: 0.65rem;
+		font-size: 0.72rem;
+	}
+
+	.ask_esafe_ai-skill-view {
+		padding: 1.1rem;
+	}
+
+	.ask_esafe_ai-skill-view h2 {
+		font-size: 1.25rem;
+	}
+
+	.ask_esafe_ai-scan-upload {
+		padding: 1.2rem 0.7rem;
 	}
 }

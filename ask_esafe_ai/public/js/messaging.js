@@ -174,6 +174,8 @@
 				if (tab === "notifications") this.notificationTab = node;
 			}
 			if (!this.ai) this.tabBar.setAttribute("role", "tablist");
+			const skillsTab = this.ai?.panel.querySelector('[data-tab="skills"]')?.closest("li");
+			if (skillsTab) this.tabBar.append(skillsTab);
 			this.badge = element("span", "esafe-messaging-badge");
 			this.badge.hidden = true;
 			this.launcher.append(this.badge);
