@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - Develop
     paths-ignore:
       - "**/locale/main.pot"
   pull_request:
@@ -11,7 +12,7 @@ on:
       - "**/locale/main.pot"
 
 concurrency:
-  group: develop-ask_esafe_ai-${{ github.event.number }}
+  group: ask_esafe_ai-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -19,7 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-    name: Server
+      matrix:
+        frappe-branch: [version-16, develop]
+    name: Server (${{ matrix.frappe-branch }})
 
     services:
       redis-cache:
@@ -91,7 +94,7 @@ jobs:
       - name: Setup
         run: |
           pip install frappe-bench
-          bench init --skip-redis-config-generation --skip-assets --python "$(which python)" ~/frappe-bench
+          bench init --frappe-branch "${{ matrix.frappe-branch }}" --skip-redis-config-generation --skip-assets --python "$(which python)" ~/frappe-bench
 
       - name: Install
         working-directory: /home/runner/frappe-bench

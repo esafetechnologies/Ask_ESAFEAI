@@ -5,7 +5,7 @@ REPO_NAME="ask_esafe_ai"
 REPO_PATH="/workspace/${REPO_NAME}"
 BENCH_ROOT="/workspace/frappe-bench"
 SITE_NAME="test_site"
-FRAPPE_BRANCH="develop"
+FRAPPE_BRANCH="${FRAPPE_BRANCH:-version-16}"
 DB_ROOT_PASSWORD="123"
 ADMIN_PASSWORD="admin"
 

@@ -231,6 +231,8 @@ Permission errors, validation errors, missing records, and LLM provider failures
 
 ## Installation
 
+This branch declares support for Frappe and ERPNext version 16 and Frappe version 17 development builds. Python 3.14 or newer is required. Automated server tests run against both the Frappe `version-16` and `develop` branches.
+
 Install this app with the [bench](https://github.com/frappe/bench) CLI:
 
 ```bash
@@ -294,7 +296,7 @@ The benchmark reports file counts and search times for native search and the Pyt
 
 This app can use GitHub Actions for CI. The configured workflows are:
 
-- CI installs this app and runs unit tests on every push to the `develop` branch.
+- CI installs this app and runs unit tests against Frappe `version-16` and `develop` on every push to the app's `develop` or `Develop` branch.
 - Linters run [Frappe Semgrep Rules](https://github.com/frappe/semgrep-rules) and [pip-audit](https://pypi.org/project/pip-audit/) on every pull request.
 
 ## Privacy
