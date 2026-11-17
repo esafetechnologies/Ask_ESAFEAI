@@ -2130,12 +2130,11 @@ import "./field_agent";
 				lang: frappe?.boot?.lang || document.documentElement.lang || "en",
 				user_defaults: { ...(frappe?.boot?.user?.defaults || {}) },
 			};
-			if (window.askEsafeHostContext && window.parent !== window) {
-				return { ...context, ...window.askEsafeHostContext };
-			}
-
 			if (frappe.session?.user !== "Administrator") {
 				context.user_roles = frappe.user_roles || [];
+			}
+			if (window.askEsafeHostContext && window.parent !== window) {
+				return { ...context, ...window.askEsafeHostContext };
 			}
 
 			if (route[0] === "Form" && window.cur_frm?.doc) {

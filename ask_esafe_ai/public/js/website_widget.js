@@ -20,8 +20,8 @@
 		root.innerHTML = `<button type="button" class="esafe-launcher" aria-label="Open ASK ESAFE AI" aria-expanded="false">
 			<img src="${asset}img/esafe-ai-emblem.svg" alt=""></button>
 			<section class="esafe-website-panel" aria-label="ASK ESAFE AI" hidden>
-				<div class="esafe-load-status" role="status">Loading ASK ESAFE AI…</div>
-				<button type="button" class="esafe-website-close" aria-label="Close ASK ESAFE AI">×</button>
+				<div class="esafe-load-status" role="status">Loading ASK ESAFE AI...</div>
+				<button type="button" class="esafe-website-close" aria-label="Close ASK ESAFE AI">&times;</button>
 			</section>`;
 		document.body.append(root);
 		const launcher = root.querySelector(".esafe-launcher");
@@ -83,7 +83,7 @@
 			close.focus();
 			if (!frame) {
 				status.hidden = false;
-				status.textContent = "Loading ASK ESAFE AI…";
+				status.textContent = "Loading ASK ESAFE AI...";
 				frame = document.createElement("iframe");
 				frame.title = "ASK ESAFE AI assistant";
 				frame.hidden = true;

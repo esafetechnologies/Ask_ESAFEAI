@@ -61,6 +61,14 @@ class TestWebsiteWidget(unittest.TestCase):
 			setattr(response, field, value)
 			self.inject(response)
 			self.assertNotIn(website_widget.ASSET, response.html)
+		for header, value in [("Content-Encoding", "gzip"), ("Content-Disposition", "attachment")]:
+			response = Response()
+			response.headers[header] = value
+			self.inject(response)
+			self.assertNotIn(website_widget.ASSET, response.html)
+		response = Response("<section>HTML fragment</section>")
+		self.inject(response)
+		self.assertNotIn(website_widget.ASSET, response.html)
 		response = Response()
 		response.headers["Content-Encoding"] = "gzip"
 		self.inject(response)

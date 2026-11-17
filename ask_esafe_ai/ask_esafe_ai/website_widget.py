@@ -7,7 +7,9 @@ import frappe
 
 ASSET = "/assets/ask_esafe_ai/js/website_widget.js"
 SCRIPT = f'<script defer src="{ASSET}" data-ask-esafe-ai-widget></script>'
-EXCLUDED_ROUTES = ("/desk", "/app", "/api", "/login", "/update-password", "/assets")
+EXCLUDED_ROUTES = (
+	"/desk", "/app", "/api", "/login", "/update-password", "/assets", "/files", "/private", "/printview",
+)
 
 
 def inject_widget(response=None, request=None):
@@ -16,6 +18,8 @@ def inject_widget(response=None, request=None):
 	if response.status_code != 200 or response.is_streamed or response.direct_passthrough:
 		return
 	if response.mimetype != "text/html" or response.headers.get("Content-Encoding"):
+		return
+	if response.headers.get("Content-Disposition", "").lower().startswith("attachment"):
 		return
 	if frappe.session.user == "Guest":
 		return
