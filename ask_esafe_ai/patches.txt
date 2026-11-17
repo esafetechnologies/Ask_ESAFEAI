@@ -5,3 +5,4 @@
 [post_model_sync]
 # Patches added in this section will be executed after doctypes are migrated
 ask_esafe_ai.patches.use_langchain_provider_keys
+ask_esafe_ai.patches.enable_chat_file_upload

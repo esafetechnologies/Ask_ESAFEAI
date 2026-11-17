@@ -1,4 +1,5 @@
 .esafe-messaging-root {
+	--ask-esafe-ai-chat-bg: #f3f9ff;
 	position: fixed;
 	right: 1rem;
 	bottom: 1rem;
@@ -40,7 +41,7 @@
 	height: min(42rem, calc(100dvh - 2rem));
 	overflow: hidden;
 	color: var(--text-color, #172331);
-	background: var(--bg-color, #fff);
+	background: var(--ask-esafe-ai-chat-bg, #f3f9ff);
 	border: 1px solid var(--border-color, #dce3ea);
 	border-radius: 0.9rem;
 	box-shadow: 0 16px 48px #0f172a33;
@@ -115,6 +116,10 @@
 	flex-direction: column;
 	min-height: 0;
 	color: var(--text-color, #172331);
+}
+
+.esafe-messaging-view {
+	background: var(--ask-esafe-ai-chat-bg, #f3f9ff);
 }
 
 .esafe-messaging-status:not(:empty) {
@@ -223,6 +228,7 @@
 }
 
 [data-theme="dark"] .esafe-messaging-root {
+	--ask-esafe-ai-chat-bg: #1d2b3c;
 	--bg-color: #1a232d;
 	--text-color: #e5edf5;
 	--text-muted: #a9b5c4;

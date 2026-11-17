@@ -1050,14 +1050,9 @@ import "./field_agent";
 									</div>
 								</div>
 								<div class="ask_esafe_ai-composer-actions">
-									<button class="ask_esafe_ai-icon-button ask_esafe_ai-attach btn btn-secondary btn-sm ask_esafe_ai-hidden" type="button" title="${__(
+									<button class="ask_esafe_ai-icon-button ask_esafe_ai-attach btn btn-secondary btn-sm" type="button" title="${__(
 										"Attach file",
-									)}" aria-label="${__("Attach file")}">${getIcon(
-										"paperclip",
-										"sm",
-										"",
-										true,
-									)}</button>
+									)}" aria-label="${__("Attach file")}" disabled><svg class="ask_esafe_ai-paperclip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21.4 11.1-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/></svg></button>
 									<button class="ask_esafe_ai-icon-button ask_esafe_ai-mic btn btn-secondary btn-sm" type="button" title="${__(
 										"Voice input",
 									)}" aria-label="${__("Voice input")}">${getIcon("mic", "sm", "", true)}</button>
@@ -1202,6 +1197,7 @@ import "./field_agent";
 				},
 			});
 			const askEsafeAiBoot = response.message.ask_esafe_ai || {};
+			frappe.boot.ask_esafe_ai = { ...frappe.boot.ask_esafe_ai, ...askEsafeAiBoot };
 			await this.applyConversation(response.message.conversation);
 			this.syncSupportPhoneAction(askEsafeAiBoot);
 			this.syncFileUploadButton();
@@ -1420,7 +1416,7 @@ import "./field_agent";
 		}
 
 		setActiveTab(tabName) {
-			const collaboration = this.collaboration?.tabs.includes(tabName);
+			const collaboration = Boolean(this.collaboration?.tabs.includes(tabName));
 			const nextTab = collaboration || tabName === "history" ? tabName : "chat";
 			this.state.activeTab = nextTab;
 			this.panel.dataset.collaboration = collaboration ? "true" : "false";
@@ -1523,21 +1519,26 @@ import "./field_agent";
 			if (!this.attachEl) {
 				return;
 			}
-			this.attachEl.classList.toggle("ask_esafe_ai-hidden", !this.isFileUploadEnabled());
+			this.attachEl.classList.remove("ask_esafe_ai-hidden");
+			this.attachEl.disabled = !this.isFileUploadEnabled() || this.state.loading || !this.state.conversation?.name;
+			this.attachEl.title = this.isFileUploadEnabled()
+				? __("Attach file")
+				: __("Enable Allow File Upload in ASK ESAFE AI Settings to attach files.");
 		}
 
 		openFileUploader() {
-			if (!this.state.conversation?.name || this.state.loading) {
+			if (!this.isFileUploadEnabled() || !this.state.conversation?.name || this.state.loading) {
 				return;
 			}
+			const conversationName = this.state.conversation.name;
 			new frappe.ui.FileUploader({
 				doctype: "ASK ESAFE AI Conversation",
-				docname: this.state.conversation.name,
-				on_success: (file_doc) => this.onFileUploaded(file_doc),
+				docname: conversationName,
+				on_success: (file_doc) => this.onFileUploaded(file_doc, conversationName),
 			});
 		}
 
-		async onFileUploaded(fileDoc) {
+		async onFileUploaded(fileDoc, conversationName = this.state.conversation?.name) {
 			if (!fileDoc?.file_name) {
 				return;
 			}
@@ -1546,14 +1547,14 @@ import "./field_agent";
 					method: "ask_esafe_ai.api.attach_file",
 					type: "POST",
 					args: {
-						conversation: this.state.conversation.name,
+						conversation: conversationName,
 						file: {
 							name: fileDoc.name,
 							file_name: fileDoc.file_name,
 						},
 					},
 				});
-				if (response.message?.conversation) {
+				if (response.message?.conversation && this.state.conversation?.name === conversationName) {
 					await this.applyConversation(response.message.conversation);
 				}
 			} catch (error) {
@@ -2011,6 +2012,7 @@ import "./field_agent";
 
 		setLoading(value) {
 			this.state.loading = value;
+			this.syncFileUploadButton();
 			if (!value) {
 				this.state.stopping = false;
 			}
