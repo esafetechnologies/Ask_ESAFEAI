@@ -1,7 +1,7 @@
-# ask_alyf development bench
+# ask_esafe_ai development bench
 
-This workspace is a generated Frappe bench. The `ask_alyf` source checkout is
-linked at `apps/ask_alyf`, so edits there are immediately available to the
+This workspace is a generated Frappe bench. The `ask_esafe_ai` source checkout is
+linked at `apps/ask_esafe_ai`, so edits there are immediately available to the
 bench.
 
 The development site is `test_site`. Its Administrator password is
@@ -34,7 +34,7 @@ Open **Run and Debug** and select one of these configurations:
   server. Use it when the remaining services are already running separately.
 - **Bench: Services (without web)** — starts the non-web services only.
 - **Bench: Console** — opens an interactive console for `test_site`.
-- **Bench: Test ask_alyf** — runs the app test suite under debugpy.
+- **Bench: Test ask_esafe_ai** — runs the app test suite under debugpy.
 - **Bench: Test module** — prompts for a dotted test module.
 - **Bench: Migrate** — migrates `test_site`.
 - **Bench: Worker** — runs a worker under debugpy.
@@ -47,5 +47,5 @@ The container setup already installs requirements, builds assets, and migrates
 the site. To run that workflow again:
 
 ```bash
-bash /workspace/ask_alyf/.devcontainer/setup.sh
+bash /workspace/ask_esafe_ai/.devcontainer/setup.sh
 ```

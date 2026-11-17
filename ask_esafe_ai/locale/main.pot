@@ -1,0 +1,1843 @@
+# Translations template for ASK ESAFE AI.
+# Copyright (C) 2026 ALYF GmbH
+# This file is distributed under the same license as the ASK ESAFE AI project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ASK ESAFE AI VERSION\n"
+"Report-Msgid-Bugs-To: https://github.com/esafetechnologies/Ask_ESAFEAI/issues\n"
+"POT-Creation-Date: 2026-10-04 13:11+0053\n"
+"PO-Revision-Date: 2026-10-04 13:11+0053\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:314
+msgid "1 step"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/deep_agent_backend.py:163
+msgid "Access to hidden paths is not allowed"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1591
+msgid "Accounts"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1446
+msgid "Action field 'args' must be an object."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1412 ask_esafe_ai/ask_esafe_ai/tools.py:1423
+msgid "Action field 'doctype' is required."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1441
+msgid "Action field 'file_id' is required."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1427
+msgid "Action field 'records' must be a non-empty list."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1431
+msgid "Action field 'records' row #{0} must be an object."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1416
+msgid "Action field 'values' must be an object."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1356
+msgid "Action field '{0}' must be an object."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1215
+msgid "Add a row to {0} on current form"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1217
+msgid "Add child row action needs correction."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:930
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1503
+msgid "Agent"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:158
+msgid "Agent mode is disabled or not available for your user."
+msgstr ""
+
+#. Label of the allow_agent_mode (Check) field in DocType 'ASK ESAFE AI Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Allow Agent Mode"
+msgstr ""
+
+#. Label of the allow_code_search (Check) field in DocType 'ASK ESAFE AI Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Allow Code Search"
+msgstr ""
+
+#. Label of the allow_conversation_deletion (Check) field in DocType 'ASK ESAFE AI
+#. Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Allow Conversation Deletion"
+msgstr ""
+
+#. Label of the allow_field_agent (Check) field in DocType 'ASK ESAFE AI Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Allow Field Agent"
+msgstr ""
+
+#. Label of the allow_file_upload (Check) field in DocType 'ASK ESAFE AI Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Allow File Upload"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:968
+msgid "Amend proposal needs correction."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:966
+msgid "Amend {0} {1}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:147
+msgid "Amending {0}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1404
+msgid "And {0} more."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/deep_agent_backend.py:100 ask_esafe_ai/ask_esafe_ai/tools.py:156
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1024
+msgid "App '{0}' is not installed."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2618
+msgid "Applying action..."
+msgstr ""
+
+#. Label of a Desktop Icon
+#. Title of a Workspace Sidebar
+#: ask_esafe_ai/desktop_icon/ask_esafe_ai.json ask_esafe_ai/workspace_sidebar/ask_esafe_ai.json
+msgid "ASK ESAFE AI"
+msgstr ""
+
+#. Name of a DocType
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_checkpoint/ask_esafe_ai_checkpoint.json
+msgid "ASK ESAFE AI Checkpoint"
+msgstr ""
+
+#. Name of a DocType
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_checkpoint_write/ask_esafe_ai_checkpoint_write.json
+msgid "ASK ESAFE AI Checkpoint Write"
+msgstr ""
+
+#. Name of a DocType
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_conversation/ask_esafe_ai_conversation.json
+msgid "ASK ESAFE AI Conversation"
+msgstr ""
+
+#. Name of a DocType
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_excluded_doctype/ask_esafe_ai_excluded_doctype.json
+msgid "ASK ESAFE AI Excluded DocType"
+msgstr ""
+
+#. Title of the Module Onboarding 'ASK ESAFE AI Onboarding'
+#: ask_esafe_ai/ask_esafe_ai/module_onboarding/ask_esafe_ai_onboarding/ask_esafe_ai_onboarding.json
+msgid "ASK ESAFE AI Onboarding"
+msgstr ""
+
+#. Name of a DocType
+#. Label of a Workspace Sidebar Item
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+#: ask_esafe_ai/workspace_sidebar/ask_esafe_ai.json
+msgid "ASK ESAFE AI Settings"
+msgstr ""
+
+#. Name of a DocType
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_skill/ask_esafe_ai_skill.json
+msgid "ASK ESAFE AI Skill"
+msgstr ""
+
+#. Name of a role
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_conversation/ask_esafe_ai_conversation.json
+msgid "ASK ESAFE AI User"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1289
+msgid "ASK ESAFE AI could not finish processing this message. Please try again."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:435
+msgid "ASK ESAFE AI is still working on a message in this conversation. Stop it or wait for it to finish before deleting."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:466
+msgid "ASK ESAFE AI is still working on the previous message in this conversation."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1095
+msgid "ASK ESAFE AI is visible, but no API key/model is configured yet in ASK ESAFE AI Settings."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:900
+msgid "ASK ESAFE AI sections"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1290
+msgid "ASK ESAFE AI stopped processing this message. Please try again."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:950
+msgid "ASK ESAFE AI uses AI and can make mistakes, including with numbers and information about people."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:918
+msgid "Ask about this ERPNext instance"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:132
+msgid "Asking the {0} specialist"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:787
+msgid "At least one role is required."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:936
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:938
+msgid "Attach file"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1054
+msgid "Attach file proposal needs correction."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1048
+msgid "Attach file {0} to {1} {2}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:153
+msgid "Attaching a file to {0}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/deep_agent_backend.py:267
+msgid "Attachment name is required"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/deep_agent_backend.py:43
+msgid "Attachments are read-only"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:843
+msgid "Batch create proposal needs correction."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1582
+msgid "Buying"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:891
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:893
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1460
+msgid "Call support"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1459
+msgid "Call support: {0}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1079
+msgid "Call {0}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:947
+msgid "Cancel proposal needs correction."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:945
+msgid "Cancel {0} {1}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:974
+msgid "Cancelled frontend action: {0}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:867
+msgid "Cancelled showing chart: {0}."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:828
+msgid "Cancelled the pending operation: {0}."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2334
+msgid "Changes preview"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1253
+msgid "Chart action needs correction."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1578
+msgid "Chart data must be an object."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1504
+msgid "Chart data requires a non-empty datasets array."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1485
+msgid "Chart data requires a non-empty labels array."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1564
+msgid "Chart height is out of range."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1494
+msgid "Chart labels must be numbers or strings."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1593
+msgid "Chart monthly expenses by cost center"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1575
+msgid "Chart my monthly sales revenue for the last 6 months"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1638
+msgid "Chart open issues by priority"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1620
+msgid "Chart production output by item this week"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1584
+msgid "Chart spending by supplier for this quarter"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1611
+msgid "Chart stock value by warehouse"
+msgstr ""
+
+#. Label of the model (Autocomplete) field in DocType 'ASK ESAFE AI Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Chat Model"
+msgstr ""
+
+#. Label of the chat_provider_tab (Tab Break) field in DocType 'ASK ESAFE AI
+#. Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Chat Provider"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:105
+msgid "Checking the {0} form"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:107
+msgid "Checking your permissions on {0}"
+msgstr ""
+
+#. Label of the checkpoint_data (Long Text) field in DocType 'ASK ESAFE AI
+#. Checkpoint'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_checkpoint/ask_esafe_ai_checkpoint.json
+msgid "Checkpoint Data (base64)"
+msgstr ""
+
+#. Label of the checkpoint_id (Data) field in DocType 'ASK ESAFE AI Checkpoint'
+#. Label of the checkpoint_id (Data) field in DocType 'ASK ESAFE AI Checkpoint
+#. Write'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_checkpoint/ask_esafe_ai_checkpoint.json
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_checkpoint_write/ask_esafe_ai_checkpoint_write.json
+msgid "Checkpoint ID"
+msgstr ""
+
+#. Label of the checkpoint_ns (Data) field in DocType 'ASK ESAFE AI Checkpoint'
+#. Label of the checkpoint_ns (Data) field in DocType 'ASK ESAFE AI Checkpoint
+#. Write'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_checkpoint/ask_esafe_ai_checkpoint.json
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_checkpoint_write/ask_esafe_ai_checkpoint_write.json
+msgid "Checkpoint Namespace"
+msgstr ""
+
+#. Label of the checkpoint_type (Data) field in DocType 'ASK ESAFE AI Checkpoint'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_checkpoint/ask_esafe_ai_checkpoint.json
+msgid "Checkpoint Type"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/deep_agent_backend.py:104 ask_esafe_ai/ask_esafe_ai/tools.py:185
+msgid "Code access is restricted to installed app directories."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:127
+msgid "Code search is disabled in ASK ESAFE AI Settings."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:276
+msgid "Configure a model in ASK ESAFE AI Settings before sending messages."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:752
+msgid "Configure a vision model API key in ASK ESAFE AI Settings."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:754
+msgid "Configure a vision model in ASK ESAFE AI Settings."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:269
+#: ask_esafe_ai/ask_esafe_ai/test_tool_error_middleware.py:104
+msgid "Configure an API key in ASK ESAFE AI Settings before sending messages."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:833
+msgid "Confirm all"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:745 ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2618
+msgid "Confirming action..."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:429
+msgid "Conversation deletion is not allowed."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:964
+msgid "Conversation name is required."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1277
+msgid "Conversation not found. Please start a new conversation."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:583
+msgid "Copy as Markdown"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:861
+msgid "Could not attach charts to the assistant message."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:775
+msgid "Could not complete the operation: {0}."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:869
+msgid "Could not display chart."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2837
+msgid "Could not download chart."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:666
+msgid "Could not extract visual content from the file."
+msgstr ""
+
+#: ask_esafe_ai/public/js/field_agent.js:226
+msgid "Could not generate content."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2908
+msgid "Could not render chart."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:734
+msgid "Could not render diagram."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:101
+msgid "Counting {0}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:819
+msgid "Create proposal needs correction."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:791
+msgid "Create skill '{0}'"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:817
+msgid "Create {0}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:841
+msgid "Create {0} {1} records"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1368
+msgid "Created {0} of {1} {2} records."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:139
+msgid "Creating several {0} records"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2482
+msgid "Current document is {0}, expected {1}."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2475
+msgid "Current form is {0}, expected {1}."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1522 ask_esafe_ai/ask_esafe_ai/tools.py:1525
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1528
+msgid "Dataset values must be numeric."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1517
+msgid "Dataset values must match labels length."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1818
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1819
+msgid "Delete conversation"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1346
+msgid "Delete conversation '{0}'?"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:989
+msgid "Delete proposal needs correction."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:987
+msgid "Delete {0} {1}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1302
+msgid "Deleted {0} {1}"
+msgstr ""
+
+#: ask_esafe_ai/public/js/field_agent.js:83
+msgid "Describe what you want..."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:304
+msgid "DocType '{0}' is excluded from Agent mode."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/test_tool_error_middleware.py:84
+#: ask_esafe_ai/ask_esafe_ai/test_tool_error_middleware.py:93
+msgid "DocType is excluded"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:960
+msgid "DocType is required."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:877
+msgid "Document extraction did not return text."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:901
+msgid "Document extraction did not return valid JSON."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:881
+msgid "Document extraction returned an empty response."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:826
+msgid "Document extraction returned no choices."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:831
+msgid "Document extraction returned no content."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:962
+msgid "Document name is required."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2822
+msgid "Download chart as SVG"
+msgstr ""
+
+#: ask_esafe_ai/public/js/field_agent.js:197
+msgid "Drafting..."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:885
+msgid "ERPNext assistant"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1544
+msgid "Each chart must be an object."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1512
+msgid "Each dataset must be an object."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1515
+msgid "Each dataset needs a values array."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:443
+msgid "Each label must be a string."
+msgstr ""
+
+#. Label of the enable_tracing (Check) field in DocType 'ASK ESAFE AI Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Enable Tracing"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:561
+msgid "Entry type must be one of any, file, or directory."
+msgstr ""
+
+#. Label of the excluded_doctype (Link) field in DocType 'ASK ESAFE AI Excluded
+#. DocType'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_excluded_doctype/ask_esafe_ai_excluded_doctype.json
+msgid "Excluded DocType"
+msgstr ""
+
+#. Label of the excluded_doctypes (Table MultiSelect) field in DocType 'Ask
+#. ESAFE AI Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Excluded DocTypes"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:972
+msgid "Executed frontend action: {0}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1401
+msgid "Failed rows: {0}"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1437
+msgid "Failed to attach file to conversation."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2645
+msgid "Failed to confirm pending operation."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1350
+msgid "Failed to delete conversation."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2583
+msgid "Failed to execute frontend action."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1861
+msgid "Failed to open conversation."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2683
+msgid "Failed to reject pending operation."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2203
+msgid "Failed to send message."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1949
+msgid "Failed to stop the run."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1734
+msgid "Field '{0}' in {1} is a child table ({2}) and must be a list of row objects."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1742
+msgid "Field '{0}' row #{1} in {2} must be an object."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:1019
+msgid "Field Agent is not enabled."
+msgstr ""
+
+#: ask_esafe_ai/public/js/field_agent.js:261
+msgid "Field updated."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2512
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2521
+msgid "Field {0} does not exist on this form."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:1072 ask_esafe_ai/ask_esafe_ai/tools.py:692
+msgid "File '{0}' was not found."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:690
+msgid "File ID is required."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:1057
+msgid "File upload is not enabled."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:166
+msgid "Filling in the open form"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:200
+msgid "Finding {0}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:200
+msgid "Finding {0} in {1}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1732
+msgid "Frontend action 'frm_add_child' field 'docname' must be a string."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1703
+msgid "Frontend action 'frm_add_child' field 'doctype' must be a string."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1699
+msgid "Frontend action 'frm_add_child' field 'values' must be an object."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1696
+msgid "Frontend action 'frm_add_child' requires a fieldname."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1690
+msgid "Frontend action 'frm_set_value' field 'docname' must be a string."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1688
+msgid "Frontend action 'frm_set_value' field 'doctype' must be a string."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1684
+msgid "Frontend action 'frm_set_value' requires a fieldname."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1672
+msgid "Frontend action 'new_doc' field 'route_options' must be an object."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1669
+msgid "Frontend action 'new_doc' requires a DocType."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1678
+msgid "Frontend action 'scroll_to_field' requires a fieldname."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1660
+msgid "Frontend action 'set_route' requires a non-empty route list."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:976
+msgid "Frontend action failed: {0}"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2570
+msgid "Frontend action is missing a call ID."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1655
+msgid "Frontend action payload contains an unsafe key."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1652
+msgid "Frontend action payload must be an object."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1197
+msgid "Frontend actions must be executed in the browser."
+msgstr ""
+
+#: ask_esafe_ai/public/js/field_agent.js:97
+msgid "Generate"
+msgstr ""
+
+#: ask_esafe_ai/public/js/field_agent.js:290
+msgid "Generate with AI"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:808 ask_esafe_ai/ask_esafe_ai/api.py:925
+msgid "Generating response..."
+msgstr ""
+
+#: ask_esafe_ai/public/js/field_agent.js:185
+msgid "Generating..."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1600
+msgid "HR"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:162
+msgid "Highlighting a field"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:907
+msgid "History"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1622
+msgid "How many Work Orders are behind schedule?"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1604
+msgid "How many leave applications are pending approval?"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1586
+msgid "How many pending purchase receipts do I have?"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1577
+msgid "How many quotations were sent this month?"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:647
+#: ask_esafe_ai/ask_esafe_ai/test_tool_error_middleware.py:153
+msgid "I hit an error while processing that request. Please try again."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:213 ask_esafe_ai/ask_esafe_ai/api.py:634
+msgid "I've prepared the operation. Please review and confirm."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1204
+msgid "Invalid action payload."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1582 ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2878
+msgid "Invalid chart data."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1640
+msgid "Invalid chart specification."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1184
+msgid "Invalid pending operation payload."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/deep_agent_backend.py:182
+msgid "Invalid regex pattern: {0}"
+msgstr ""
+
+#. Label of the llm_provider (Select) field in DocType 'ASK ESAFE AI Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "LLM Provider"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:438
+msgid "Labels must be provided as a list of strings."
+msgstr ""
+
+#. Label of the langsmith_api_key (Password) field in DocType 'ASK ESAFE AI
+#. Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "LangSmith API Key"
+msgstr ""
+
+#. Label of the langsmith_endpoint (Data) field in DocType 'ASK ESAFE AI Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "LangSmith Endpoint"
+msgstr ""
+
+#. Label of the langsmith_project (Data) field in DocType 'ASK ESAFE AI Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "LangSmith Project"
+msgstr ""
+
+#. Label of the last_context_json (Code) field in DocType 'ASK ESAFE AI
+#. Conversation'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_conversation/ask_esafe_ai_conversation.json
+msgid "Last Context JSON"
+msgstr ""
+
+#. Label of the last_message_at (Datetime) field in DocType 'ASK ESAFE AI
+#. Conversation'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_conversation/ask_esafe_ai_conversation.json
+msgid "Last Message At"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/deep_agent_backend.py:172
+#: ask_esafe_ai/ask_esafe_ai/deep_agent_backend.py:278
+msgid "Line offset {0} exceeds file length"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:210
+msgid "Listing {0}"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1741
+msgid "Loading conversation..."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:111
+msgid "Looking up available reports"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:109
+msgid "Looking up what you can access"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1618
+msgid "Manufacturing"
+msgstr ""
+
+#. Label of the messages_json (Code) field in DocType 'ASK ESAFE AI Conversation'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_conversation/ask_esafe_ai_conversation.json
+msgid "Messages JSON"
+msgstr ""
+
+#. Label of the metadata_data (Long Text) field in DocType 'ASK ESAFE AI
+#. Checkpoint'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_checkpoint/ask_esafe_ai_checkpoint.json
+msgid "Metadata Data (base64)"
+msgstr ""
+
+#. Label of the metadata_type (Data) field in DocType 'ASK ESAFE AI Checkpoint'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_checkpoint/ask_esafe_ai_checkpoint.json
+msgid "Metadata Type"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1081
+msgid "Method call proposal needs correction."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1505
+msgid "Mode: {0}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:428
+msgid "Multiple matching files were found. Provide reference_field, file_url, or file_name."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1100
+msgid "Navigate to {0}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:296 ask_esafe_ai/ask_esafe_ai/api.py:400
+#: ask_esafe_ai/ask_esafe_ai/api.py:477
+msgid "New Conversation"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:890
+msgid "New chat"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1127
+msgid "New document action needs correction."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:660
+msgid "Next page"
+msgstr ""
+
+#: ask_esafe_ai/public/js/field_agent.js:169
+msgid "No active form found."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1773
+msgid "No conversations yet."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1136
+msgid "No documentation URL was found for app '{0}'."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2469
+msgid "No form is currently open."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:194
+msgid "No installed app code roots were found."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:424
+msgid "No matching file was found."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:249
+msgid "No pending operation matches call_id '{0}'."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1153
+msgid "No pyproject.toml was found for app '{0}'."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1051
+msgid "No repository URL was found for app '{0}'."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:1070
+msgid "No valid file provided."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1041
+msgid "No version was found for app '{0}'."
+msgstr ""
+
+#. Description of the 'Excluded DocTypes' (Table MultiSelect) field in DocType
+#. 'ASK ESAFE AI Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "One DocType per line. These DocTypes stay read-only in Agent mode."
+msgstr ""
+
+#. Description of a DocType
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_checkpoint/ask_esafe_ai_checkpoint.json
+msgid "One LangGraph checkpoint. Written by FrappeCheckpointSaver, not by users."
+msgstr ""
+
+#. Description of a DocType
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_checkpoint_write/ask_esafe_ai_checkpoint_write.json
+msgid "One pending write of a LangGraph checkpoint. Written by FrappeCheckpointSaver, not by users."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1007
+msgid "Only Administrator and System Manager can run SQL queries."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1056
+msgid "Only GitHub repositories are supported for release lookup."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1010
+msgid "Only a single read-only SQL statement is allowed."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:741
+msgid "Only backend actions can be confirmed by this endpoint."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1013
+msgid "Only read-only SQL statements are allowed."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:877
+msgid "Open ASK ESAFE AI"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1125
+msgid "Open new {0}"
+msgstr ""
+
+#. Option for the 'LLM Provider' (Select) field in DocType 'ASK ESAFE AI Settings'
+#. Option for the 'Vision LLM Provider' (Select) field in DocType 'ASK ESAFE AI
+#. Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "OpenAI"
+msgstr ""
+
+#. Option for the 'LLM Provider' (Select) field in DocType 'ASK ESAFE AI Settings'
+#. Option for the 'Vision LLM Provider' (Select) field in DocType 'ASK ESAFE AI
+#. Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "OpenAI Compatible"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:160
+msgid "Opening a new {0}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:158
+msgid "Opening a page"
+msgstr ""
+
+#. Description of the 'Base URL' (Data) field in DocType 'ASK ESAFE AI Settings'
+#. Description of the 'Vision Base URL' (Data) field in DocType 'ASK ESAFE AI
+#. Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Optional for OpenAI. Required for OpenAI-compatible providers."
+msgstr ""
+
+#. Label of the parent_checkpoint_id (Data) field in DocType 'ASK ESAFE AI
+#. Checkpoint'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_checkpoint/ask_esafe_ai_checkpoint.json
+msgid "Parent Checkpoint ID"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:505
+msgid "Path '{0}' must point to a file inside an installed app."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:267
+msgid "Path '{0}' was not found in app '{1}'."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/deep_agent_backend.py:165
+msgid "Path is not a file: {0}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/deep_agent_backend.py:93 ask_esafe_ai/ask_esafe_ai/tools.py:216
+msgid "Path must start with an installed app name."
+msgstr ""
+
+#. Label of the pending_operation_json (Code) field in DocType 'ASK ESAFE AI
+#. Conversation'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_conversation/ask_esafe_ai_conversation.json
+msgid "Pending Operation JSON"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2288
+msgid "Pending operation"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:134
+msgid "Planning the next steps"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:659
+msgid "Previous page"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.py:147
+msgid "Please configure a Base URL first and save the settings, then we can fetch available models."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.py:140
+msgid "Please configure an API key first and save the settings, then we can fetch available models."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1218
+msgid "Prepared add child row action."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:969
+msgid "Prepared amend proposal."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1055
+msgid "Prepared attach file proposal."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:844
+msgid "Prepared batch create proposal."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:948
+msgid "Prepared cancel proposal."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1254
+msgid "Prepared chart display."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:820
+msgid "Prepared create proposal."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:990
+msgid "Prepared delete proposal."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1082
+msgid "Prepared method call proposal."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1128
+msgid "Prepared new document action."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1020
+msgid "Prepared rename proposal."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1103
+msgid "Prepared route action."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1148
+msgid "Prepared scroll action."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1183
+msgid "Prepared set field action."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:904
+msgid "Prepared set value proposal."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:794
+msgid "Prepared skill proposal."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:927
+msgid "Prepared submit proposal."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:873
+msgid "Prepared update proposal."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:164
+msgid "Preparing a chart"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1627
+msgid "Projects"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1631
+msgid "Provide at least one chart in frappe_charts."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:449
+msgid "Provide at least one label to translate."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:468 ask_esafe_ai/ask_esafe_ai/tools.py:607
+msgid "Query is required."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:126
+msgid "Reading documentation"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:117
+msgid "Reading instructions"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:119
+msgid "Reading the attached document"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:103
+msgid "Reading {0}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:206
+msgid "Reading {0}, lines {1}-{2}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:98
+msgid "Reading {0} list"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:871 ask_esafe_ai/ask_esafe_ai/api.py:978
+msgid "Reason: {0}"
+msgstr ""
+
+#. Label of the reasoning_effort (Select) field in DocType 'ASK ESAFE AI Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Reasoning Effort"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2381
+msgid "Records to create ({0})"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:710
+msgid "Reference doctype is required."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:714
+msgid "Reference name is required."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:817
+msgid "Reject"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:836
+msgid "Reject all"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1019
+msgid "Rename proposal needs correction."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1017
+msgid "Rename {0} {1} to {2}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:151
+msgid "Renaming {0}"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:881
+msgid "Resize chat window"
+msgstr ""
+
+#: ask_esafe_ai/public/js/field_agent.js:272
+msgid "Reverted."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1102
+msgid "Route action needs correction."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1663
+msgid "Route part #{0} must be a non-empty string."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:115
+msgid "Running a database query"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:155
+msgid "Running {0}"
+msgstr ""
+
+#. Label of the vision_model_is_chat_model (Check) field in DocType 'ASK ESAFE AI
+#. Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Same as Chat"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:117
+msgid "Saving instructions"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1147
+msgid "Scroll action needs correction."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1145
+msgid "Scroll to field {0}"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2503
+msgid "Scrolling to fields is not available on this form."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:196
+msgid "Searching for \"{0}\""
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:194
+msgid "Searching for \"{0}\" in {1}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:127
+msgid "Searching the documentation"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:130
+msgid "Searching the source code"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1573
+msgid "Selling"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2143
+msgid "Sending..."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1182
+msgid "Set field action needs correction."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1180
+msgid "Set field {0} on current form"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:903
+msgid "Set value proposal needs correction."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:901
+msgid "Set {0} on {1} {2}"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:398
+msgid "Show all"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1248
+msgid "Show chart"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1602
+msgid "Show employee headcount by department as a chart"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1621
+msgid "Show me open Work Orders and their status"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1647
+msgid "Show me the top 10 DocTypes by record count"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1594
+msgid "Show me unpaid Sales Invoices older than 30 days"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1639
+msgid "Show me unresolved issues from this week"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1629
+msgid "Show project progress as a chart"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1248
+msgid "Show {0} charts"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/skill_utils.py:43
+msgid "Skill '{0}' is not available for the current user."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/skill_utils.py:38
+msgid "Skill '{0}' was not found."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:785
+msgid "Skill description is required."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/skill_utils.py:33
+msgid "Skill name is required."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:793
+msgid "Skill proposal needs correction."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:783
+msgid "Skill title is required."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1399
+msgid "Some rows failed."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:691
+msgid "Sort by {0}"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:686
+msgid "Sorted ascending by {0}"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:689
+msgid "Sorted descending by {0}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/deep_agent_backend.py:39
+msgid "Source code is read-only"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/deep_agent_backend.py:160
+msgid "Source file path is required"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:888
+msgid "Start a new conversation"
+msgstr ""
+
+#. Description of the 'Chat Model' (Autocomplete) field in DocType 'ASK ESAFE AI
+#. Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Start typing to choose a model. Available models are loaded from the configured provider."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:914
+msgid "Status must be one of success, failed, or rejected."
+msgstr ""
+
+#: ask_esafe_ai/public/js/field_agent.js:200
+msgid "Still generating..."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1609
+msgid "Stock"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1910
+msgid "Stop this run"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:632
+msgid "Stopped. Send a message to pick up from here."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1931
+msgid "Stopping..."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:926
+msgid "Submit proposal needs correction."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:924
+msgid "Submit {0} {1}"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1636
+msgid "Support"
+msgstr ""
+
+#. Label of the support_phone_number (Phone) field in DocType 'ASK ESAFE AI
+#. Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Support Phone Number"
+msgstr ""
+
+#. Label of the system_prompt (Code) field in DocType 'ASK ESAFE AI Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "System Prompt"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:654
+msgid "Table pagination"
+msgstr ""
+
+#. Label of the task_path (Data) field in DocType 'ASK ESAFE AI Checkpoint Write'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_checkpoint_write/ask_esafe_ai_checkpoint_write.json
+msgid "Task Path"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:307
+msgid "That confirmation did not match this operation. Propose it again on its own."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1079
+msgid "The Compendium app is not installed."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:325
+msgid "The action could not be completed."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:535 ask_esafe_ai/ask_esafe_ai/api.py:565
+msgid "The background job does not match this message."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:533 ask_esafe_ai/ask_esafe_ai/api.py:561
+#: ask_esafe_ai/ask_esafe_ai/api.py:587
+msgid "The message could not be found in this conversation."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:649
+msgid "The operation was completed, but the follow-up response could not be generated."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:908
+msgid "The pending operation is not a frontend action."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.py:246
+msgid "The selected Chat Model ({0}) does not support Reasoning Effort ({1})."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.py:242
+msgid "The selected Chat Model ({0}) does not support Reasoning Effort ({1}). Supported values: {2}."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.py:103
+msgid "The selected Chat Model ({0}) does not support function calling."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.py:111
+msgid "The selected Chat Model ({0}) does not support vision. Choose a vision-capable chat model or configure a separate vision model."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.py:120
+msgid "The selected Vision Model ({0}) does not support vision."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:315
+msgid "The user rejected this operation."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:902
+msgid "There is no pending frontend action to resolve."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:733
+msgid "There is no pending operation to confirm."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1030
+msgid "Thinking..."
+msgstr ""
+
+#: ask_esafe_ai/public/js/field_agent.js:203
+msgid "This is taking a moment..."
+msgstr ""
+
+#. Label of the thread_id (Data) field in DocType 'ASK ESAFE AI Checkpoint'
+#. Label of the thread_id (Data) field in DocType 'ASK ESAFE AI Checkpoint Write'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_checkpoint/ask_esafe_ai_checkpoint.json
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_checkpoint_write/ask_esafe_ai_checkpoint_write.json
+msgid "Thread ID"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1507
+msgid "Too many chart datasets."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1488
+msgid "Too many chart labels."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1634
+msgid "Too many charts in one request."
+msgstr ""
+
+#. Label of the tracing_tab (Tab Break) field in DocType 'ASK ESAFE AI Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Tracing"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:113
+msgid "Translating labels"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1237
+msgid "Unknown error."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.py:187
+msgid "Unsupported LLM provider: {0}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1338
+msgid "Unsupported action '{0}'."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:914
+msgid "Unsupported file type '{0}'. Supported types: PDF, PNG, JPG, GIF, WebP."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1649 ask_esafe_ai/ask_esafe_ai/tools.py:1712
+msgid "Unsupported frontend action '{0}'."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2532
+msgid "Unsupported frontend action: {0}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.py:175
+msgid "Unsupported model configuration: {0}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1179 ask_esafe_ai/ask_esafe_ai/tools.py:1199
+msgid "Unsupported operation kind '{0}'."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1548
+msgid "Unsupported or missing chart type."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1548
+msgid "Untitled conversation"
+msgstr ""
+
+#. Title of an Onboarding Step
+#: ask_esafe_ai/ask_esafe_ai/onboarding_step/update_ask_esafe_ai_settings/update_ask_esafe_ai_settings.json
+msgid "Update ASK ESAFE AI Settings"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:872
+msgid "Update proposal needs correction."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:870
+msgid "Update {0} {1}"
+msgstr ""
+
+#. Label of the value_data (Long Text) field in DocType 'ASK ESAFE AI Checkpoint
+#. Write'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_checkpoint_write/ask_esafe_ai_checkpoint_write.json
+msgid "Value Data (base64)"
+msgstr ""
+
+#. Label of the value_type (Data) field in DocType 'ASK ESAFE AI Checkpoint Write'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_checkpoint_write/ask_esafe_ai_checkpoint_write.json
+msgid "Value Type"
+msgstr ""
+
+#. Label of the vision_api_key (Password) field in DocType 'ASK ESAFE AI Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Vision API Key"
+msgstr ""
+
+#. Label of the vision_base_url (Data) field in DocType 'ASK ESAFE AI Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Vision Base URL"
+msgstr ""
+
+#. Label of the vision_llm_provider (Select) field in DocType 'ASK ESAFE AI
+#. Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Vision LLM Provider"
+msgstr ""
+
+#. Label of the vision_model (Autocomplete) field in DocType 'ASK ESAFE AI
+#. Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Vision Model"
+msgstr ""
+
+#. Label of the vision_provider_tab (Tab Break) field in DocType 'ASK ESAFE AI
+#. Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "Vision Provider"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:944
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:946
+msgid "Voice input"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:3030
+msgid "Voice input language: {0}"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2191
+msgid "Waiting for response..."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1576
+msgid "What Sales Orders are pending delivery?"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1648
+msgid "What are the recent Error Logs?"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1630
+msgid "What open tasks are assigned to me?"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1613
+msgid "What were the top 10 most moved items this month?"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1640
+msgid "What's the average resolution time for issues?"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1595
+msgid "What's the total outstanding receivables?"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1585
+msgid "Which Purchase Orders are overdue?"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1603
+msgid "Which employees are on leave today?"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1612
+msgid "Which items are below their reorder level?"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1631
+msgid "Which project tasks are overdue?"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:1649
+msgid "Which users logged in today?"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:367 ask_esafe_ai/ask_esafe_ai/api.py:379
+#: ask_esafe_ai/ask_esafe_ai/api.py:396 ask_esafe_ai/ask_esafe_ai/api.py:426
+#: ask_esafe_ai/ask_esafe_ai/api.py:452 ask_esafe_ai/ask_esafe_ai/api.py:520
+#: ask_esafe_ai/ask_esafe_ai/api.py:544 ask_esafe_ai/ask_esafe_ai/api.py:723
+#: ask_esafe_ai/ask_esafe_ai/api.py:791 ask_esafe_ai/ask_esafe_ai/api.py:896
+#: ask_esafe_ai/ask_esafe_ai/api.py:1015 ask_esafe_ai/ask_esafe_ai/api.py:1053
+msgid "You do not have access to ASK ESAFE AI."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:1022
+msgid "You do not have read permission on {0}."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2971
+msgid "Your browser does not support voice input."
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:155
+msgid "an action"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:132
+msgid "assistant"
+msgstr ""
+
+#. Description of a DocType
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_skill/ask_esafe_ai_skill.json
+msgid "debug session"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/agent.py:94
+msgid "doctype"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/api.py:947
+msgid "frontend action"
+msgstr ""
+
+#. Option for the 'Reasoning Effort' (Select) field in DocType 'ASK ESAFE AI
+#. Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "high"
+msgstr ""
+
+#. Option for the 'Reasoning Effort' (Select) field in DocType 'ASK ESAFE AI
+#. Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "low"
+msgstr ""
+
+#. Option for the 'Reasoning Effort' (Select) field in DocType 'ASK ESAFE AI
+#. Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "max"
+msgstr ""
+
+#. Option for the 'Reasoning Effort' (Select) field in DocType 'ASK ESAFE AI
+#. Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "medium"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:1392
+msgid "row {0}: {1}"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/toolset.py:1100
+msgid "target route"
+msgstr ""
+
+#. Option for the 'Reasoning Effort' (Select) field in DocType 'ASK ESAFE AI
+#. Settings'
+#: ask_esafe_ai/ask_esafe_ai/doctype/ask_esafe_ai_settings/ask_esafe_ai_settings.json
+msgid "xhigh"
+msgstr ""
+
+#: ask_esafe_ai/ask_esafe_ai/tools.py:966
+msgid "{0} '{1}' was not found."
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:371
+msgid "{0} failed"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:2329
+msgid "{0} rows"
+msgstr ""
+
+#: ask_esafe_ai/public/js/ask_esafe_ai.bundle.js:314
+msgid "{0} steps"
+msgstr ""
+

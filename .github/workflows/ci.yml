@@ -11,7 +11,7 @@ on:
       - "**/locale/main.pot"
 
 concurrency:
-  group: develop-ask_alyf-${{ github.event.number }}
+  group: develop-ask_esafe_ai-${{ github.event.number }}
   cancel-in-progress: true
 
 jobs:
@@ -96,10 +96,10 @@ jobs:
       - name: Install
         working-directory: /home/runner/frappe-bench
         run: |
-          bench get-app ask_alyf $GITHUB_WORKSPACE
+          bench get-app ask_esafe_ai $GITHUB_WORKSPACE
           bench setup requirements --dev
           bench new-site --db-root-password root --admin-password admin test_site
-          bench --site test_site install-app ask_alyf
+          bench --site test_site install-app ask_esafe_ai
           bench build
         env:
           CI: 'Yes'
@@ -108,6 +108,6 @@ jobs:
         working-directory: /home/runner/frappe-bench
         run: |
           bench --site test_site set-config allow_tests true
-          bench --site test_site run-tests --app ask_alyf
+          bench --site test_site run-tests --app ask_esafe_ai
         env:
           TYPE: server

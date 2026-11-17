@@ -1,0 +1,230 @@
+.esafe-messaging-root {
+	position: fixed;
+	right: 1rem;
+	bottom: 1rem;
+	z-index: 1031;
+	font: 0.875rem/1.5 var(--font-stack, system-ui, sans-serif);
+}
+
+.esafe-messaging-root [hidden],
+.esafe-messaging-view [hidden],
+.esafe-messaging-view[hidden],
+.esafe-messaging-badge[hidden] {
+	display: none !important;
+}
+
+.esafe-messaging-launcher {
+	position: relative;
+	display: grid;
+	place-items: center;
+	width: 3rem;
+	height: 3rem;
+	padding: 0;
+	border: 1px solid #cbd5e1;
+	border-radius: 0.85rem;
+	background: white;
+	box-shadow: 0 10px 24px #0f172a26;
+	cursor: pointer;
+}
+
+.esafe-messaging-launcher img {
+	width: 2.3rem;
+	height: 2.3rem;
+	object-fit: contain;
+}
+
+.esafe-messaging-panel {
+	display: flex;
+	flex-direction: column;
+	width: min(28rem, calc(100vw - 2rem));
+	height: min(42rem, calc(100dvh - 2rem));
+	overflow: hidden;
+	color: var(--text-color, #172331);
+	background: var(--bg-color, #fff);
+	border: 1px solid var(--border-color, #dce3ea);
+	border-radius: 0.9rem;
+	box-shadow: 0 16px 48px #0f172a33;
+}
+
+.esafe-messaging-panel-header,
+.esafe-messaging-tabs,
+.esafe-messaging-toolbar {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.65rem 0.8rem;
+	border-bottom: 1px solid var(--border-color, #dce3ea);
+}
+
+.esafe-messaging-panel-header,
+.esafe-messaging-toolbar {
+	justify-content: space-between;
+}
+
+.esafe-messaging-panel-header img {
+	width: 8rem;
+	max-width: 45%;
+	padding: 0.2rem;
+	border-radius: 0.25rem;
+	background: white;
+}
+
+.esafe-messaging-tabs {
+	flex-wrap: wrap;
+}
+
+.esafe-messaging-tab[aria-selected="true"] {
+	font-weight: 700;
+}
+
+.ask_esafe_ai-tabs:has(.esafe-messaging-tab) {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem;
+	padding: 0;
+	list-style: none;
+}
+
+.ask_esafe_ai-panel[data-collaboration="true"] .ask_esafe_ai-config-warning,
+.ask_esafe_ai-panel[data-collaboration="true"] .ask_esafe_ai-new-chat {
+	display: none;
+}
+
+.ask_esafe_ai-bubble:has(.esafe-messaging-badge) {
+	position: relative;
+}
+
+.esafe-messaging-badge {
+	position: absolute;
+	top: -0.4rem;
+	right: -0.45rem;
+	min-width: 1.15rem;
+	padding: 0 0.22rem;
+	color: white;
+	background: #006e69;
+	border: 2px solid white;
+	border-radius: 1rem;
+	font: 700 0.68rem/1.05rem system-ui, sans-serif;
+	text-align: center;
+}
+
+.esafe-messaging-view,
+.esafe-messaging-content {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	min-height: 0;
+	color: var(--text-color, #172331);
+}
+
+.esafe-messaging-status:not(:empty) {
+	padding: 0.4rem 0.75rem;
+	border-bottom: 1px solid var(--border-color, #dce3ea);
+}
+
+.esafe-messaging-scroll,
+.esafe-messaging-form {
+	min-height: 0;
+	overflow-y: auto;
+	padding: 0.65rem 0.8rem;
+}
+
+.esafe-messaging-transcript {
+	flex: 1 1 auto;
+}
+
+.esafe-messaging-form,
+.esafe-messaging-composer,
+.esafe-messaging-field {
+	display: flex;
+	flex-direction: column;
+	gap: 0.45rem;
+}
+
+.esafe-messaging-composer {
+	padding: 0.65rem 0.8rem;
+	overflow-y: auto;
+	max-height: 55%;
+	border-top: 1px solid var(--border-color, #dce3ea);
+}
+
+.esafe-messaging-composer p,
+.esafe-messaging-form p {
+	margin: 0;
+	overflow-wrap: anywhere;
+}
+
+.esafe-messaging-panel button,
+.esafe-messaging-view button,
+.esafe-messaging-view input,
+.esafe-messaging-view textarea,
+.esafe-messaging-view select {
+	max-width: 100%;
+	min-height: 2rem;
+	padding: 0.3rem 0.55rem;
+	border: 1px solid var(--border-color, #cbd5e1);
+	border-radius: 0.4rem;
+	color: inherit;
+	background: var(--control-bg, var(--bg-color, white));
+	font: inherit;
+}
+
+.esafe-messaging-panel button:not(:disabled),
+.esafe-messaging-view button:not(:disabled) {
+	cursor: pointer;
+}
+
+.esafe-messaging-view button:disabled {
+	opacity: 0.55;
+}
+
+.esafe-messaging-list-item {
+	display: block;
+	width: 100%;
+	margin: 0 0 0.4rem;
+	text-align: left;
+	overflow-wrap: anywhere;
+}
+
+.esafe-messaging-list-item[data-unread="true"] {
+	border-inline-start: 0.25rem solid #00aea6;
+	font-weight: 700;
+}
+
+.esafe-messaging-list-item small,
+.esafe-messaging-message small {
+	display: block;
+	color: var(--text-muted, #526273);
+	font-weight: 400;
+}
+
+.esafe-messaging-message {
+	width: fit-content;
+	max-width: 92%;
+	margin: 0.4rem 0;
+	padding: 0.4rem 0.6rem;
+	border: 1px solid var(--border-color, #dce3ea);
+	border-radius: 0.55rem;
+	overflow-wrap: anywhere;
+}
+
+.esafe-messaging-message[data-own="true"] {
+	margin-inline-start: auto;
+	background: color-mix(in srgb, #00b7ad 9%, var(--bg-color, white));
+}
+
+.esafe-messaging-text {
+	white-space: pre-wrap;
+}
+
+.esafe-messaging-empty,
+.esafe-messaging-attachment {
+	color: var(--text-muted, #526273);
+}
+
+[data-theme="dark"] .esafe-messaging-root {
+	--bg-color: #1a232d;
+	--text-color: #e5edf5;
+	--text-muted: #a9b5c4;
+	--border-color: #364353;
+}

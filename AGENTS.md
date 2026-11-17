@@ -56,5 +56,5 @@ self.assertTrue(is_stop_requested(RUN))
 ```
 
 See `test_a_stop_pressed_mid_run_is_seen_by_the_next_check` in
-`ask_alyf/ask_alyf/test_checkpointer.py`. `read_running_steps` in `toolset.py`
+`ask_esafe_ai/ask_esafe_ai/test_checkpointer.py`. `read_running_steps` in `toolset.py`
 is the other read that gets this right.

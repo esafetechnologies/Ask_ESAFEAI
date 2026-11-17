@@ -9,7 +9,7 @@ repos:
     rev: v6.0.0
     hooks:
       - id: trailing-whitespace
-        files: "ask_alyf.*"
+        files: "ask_esafe_ai.*"
         exclude: ".*json$|.*txt$|.*csv|.*md|.*svg"
       - id: check-merge-conflict
       - id: check-ast
@@ -39,11 +39,11 @@ repos:
         # Ignore any files that might contain jinja / bundles
         exclude: |
             (?x)^(
-                ask_alyf/public/dist/.*|
+                ask_esafe_ai/public/dist/.*|
                 .*node_modules.*|
                 .*boilerplate.*|
-                ask_alyf/templates/includes/.*|
-                ask_alyf/public/js/lib/.*
+                ask_esafe_ai/templates/includes/.*|
+                ask_esafe_ai/public/js/lib/.*
             )$
 
 
@@ -61,12 +61,12 @@ repos:
           - "globals"
         exclude: |
             (?x)^(
-                ask_alyf/public/dist/.*|
+                ask_esafe_ai/public/dist/.*|
                 cypress/.*|
                 .*node_modules.*|
                 .*boilerplate.*|
-                ask_alyf/templates/includes/.*|
-                ask_alyf/public/js/lib/.*
+                ask_esafe_ai/templates/includes/.*|
+                ask_esafe_ai/public/js/lib/.*
             )$
 
   - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook

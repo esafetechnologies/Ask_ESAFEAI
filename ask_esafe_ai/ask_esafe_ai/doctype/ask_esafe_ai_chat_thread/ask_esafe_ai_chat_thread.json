@@ -1,0 +1,78 @@
+{
+ "doctype": "DocType",
+ "name": "ASK ESAFE AI Chat Thread",
+ "module": "ASK ESAFE AI",
+ "engine": "InnoDB",
+ "field_order": [
+  "kind",
+  "title",
+  "pair_key",
+  "manager",
+  "assignee",
+  "peer",
+  "business_phone_id",
+  "last_inbound",
+  "opted_in",
+  "last_sequence"
+ ],
+ "fields": [
+  {
+   "fieldname": "kind",
+   "fieldtype": "Select",
+   "label": "Kind",
+   "options": "Direct\nGroup\nWhatsApp"
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title"
+  },
+  {
+   "fieldname": "pair_key",
+   "fieldtype": "Data",
+   "label": "Conversation Key",
+   "unique": 1
+  },
+  {
+   "fieldname": "manager",
+   "fieldtype": "Link",
+   "label": "Group Owner",
+   "options": "User"
+  },
+  {
+   "fieldname": "assignee",
+   "fieldtype": "Link",
+   "label": "Assigned Agent",
+   "options": "User"
+  },
+  {
+   "fieldname": "peer",
+   "fieldtype": "Data",
+   "label": "WhatsApp Contact ID"
+  },
+  {
+   "fieldname": "business_phone_id",
+   "fieldtype": "Data",
+   "label": "WhatsApp Business Phone ID",
+   "search_index": 1
+  },
+  {
+   "fieldname": "last_inbound",
+   "fieldtype": "Datetime",
+   "label": "Latest Customer Message"
+  },
+  {
+   "fieldname": "opted_in",
+   "fieldtype": "Check",
+   "label": "WhatsApp Template Opt-in"
+  },
+  {
+   "fieldname": "last_sequence",
+   "fieldtype": "Int",
+   "label": "Latest Sequence"
+  }
+ ],
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

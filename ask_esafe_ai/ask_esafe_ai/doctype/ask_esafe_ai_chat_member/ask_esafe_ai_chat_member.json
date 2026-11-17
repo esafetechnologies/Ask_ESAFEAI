@@ -1,0 +1,45 @@
+{
+ "doctype": "DocType",
+ "name": "ASK ESAFE AI Chat Member",
+ "module": "ASK ESAFE AI",
+ "engine": "InnoDB",
+ "field_order": [
+  "thread",
+  "user",
+  "joined_after",
+  "last_read",
+  "active"
+ ],
+ "fields": [
+  {
+   "fieldname": "thread",
+   "fieldtype": "Link",
+   "label": "Thread",
+   "options": "ASK ESAFE AI Chat Thread"
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "User",
+   "options": "User"
+  },
+  {
+   "fieldname": "joined_after",
+   "fieldtype": "Int",
+   "label": "Joined After Sequence"
+  },
+  {
+   "fieldname": "last_read",
+   "fieldtype": "Int",
+   "label": "Read Through Sequence"
+  },
+  {
+   "fieldname": "active",
+   "fieldtype": "Check",
+   "label": "Active"
+  }
+ ],
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

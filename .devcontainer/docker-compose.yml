@@ -28,10 +28,10 @@ services:
     environment:
       - SHELL=/bin/bash
     volumes:
-      # Mount the ask_alyf repo at /workspace/ask_alyf; the bench is created
+      # Mount the ask_esafe_ai repo at /workspace/ask_esafe_ai; the bench is created
       # as its sibling at /workspace/frappe-bench (kept on a named volume so
       # the container-managed files do not pollute the host working copy).
-      - ..:/workspace/ask_alyf:cached
+      - ..:/workspace/ask_esafe_ai:cached
       - bench-data:/workspace/frappe-bench
     working_dir: /workspace/frappe-bench
     ports:

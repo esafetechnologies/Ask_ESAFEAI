@@ -10,7 +10,7 @@
   "python.defaultInterpreterPath": "${workspaceFolder}/env/bin/python",
   "python.analysis.extraPaths": [
     "${workspaceFolder}/apps/frappe",
-    "${workspaceFolder}/apps/ask_alyf"
+    "${workspaceFolder}/apps/ask_esafe_ai"
   ],
   "search.exclude": {
     "**/archived": true,

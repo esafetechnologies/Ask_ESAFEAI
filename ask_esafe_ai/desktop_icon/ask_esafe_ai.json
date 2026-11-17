@@ -1,0 +1,26 @@
+{
+ "app": "ask_esafe_ai",
+ "bg_color": "gray",
+ "creation": "2026-03-16 02:17:16.092390",
+ "docstatus": 0,
+ "doctype": "Desktop Icon",
+ "hidden": 0,
+ "icon_type": "App",
+ "idx": 0,
+ "label": "ASK ESAFE AI",
+ "link_to": "ASK ESAFE AI",
+ "link_type": "Workspace Sidebar",
+ "logo_url": "/assets/ask_esafe_ai/img/esafe-ai-wordmark.svg",
+ "modified": "2026-04-03 21:54:05.712240",
+ "modified_by": "Administrator",
+ "name": "ASK ESAFE AI",
+ "owner": "Administrator",
+ "restrict_removal": 0,
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ],
+ "sidebar": "ASK ESAFE AI",
+ "standard": 1
+}

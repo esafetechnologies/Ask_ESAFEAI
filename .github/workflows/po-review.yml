@@ -1,8 +1,7 @@
-name: Review translation PRs
+name: Validate translation catalogs
 
 on:
-  pull_request_target:
-    types: [opened, reopened, synchronize, ready_for_review]
+  pull_request:
     paths:
       - "**/*.po"
       - "**/*.pot"
@@ -11,14 +10,21 @@ concurrency:
   group: po-review-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
-  review-po-pr:
+  validate-catalogs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    permissions:
-      contents: read
-      issues: write
-      pull-requests: write
-
     steps:
-      - uses: alyf-de/po-review-action@f40006d8450de7fd5b538e38603185bbee744117 # v1.3.0
+      - uses: actions/checkout@v6
+      - name: Install gettext
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes gettext
+      - name: Check catalogs
+        run: |
+          for catalog in ask_esafe_ai/locale/*.po ask_esafe_ai/locale/*.pot; do
+            msgfmt --check-format --output-file=/dev/null "$catalog"
+          done

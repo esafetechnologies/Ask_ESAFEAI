@@ -1,0 +1,104 @@
+{
+ "doctype": "DocType",
+ "name": "ASK ESAFE AI Chat Message",
+ "module": "ASK ESAFE AI",
+ "engine": "InnoDB",
+ "field_order": [
+  "thread",
+  "sequence",
+  "sender",
+  "direction",
+  "body",
+  "file_id",
+  "file_label",
+  "file_type",
+  "media_id",
+  "record_file",
+  "provider_id",
+  "status",
+  "template",
+  "template_language"
+ ],
+ "fields": [
+  {
+   "fieldname": "thread",
+   "fieldtype": "Link",
+   "label": "Thread",
+   "options": "ASK ESAFE AI Chat Thread"
+  },
+  {
+   "fieldname": "sequence",
+   "fieldtype": "Int",
+   "label": "Sequence"
+  },
+  {
+   "fieldname": "sender",
+   "fieldtype": "Link",
+   "label": "Sender",
+   "options": "User"
+  },
+  {
+   "fieldname": "direction",
+   "fieldtype": "Select",
+   "label": "Direction",
+   "options": "Internal\nInbound\nOutbound"
+  },
+  {
+   "fieldname": "body",
+   "fieldtype": "Small Text",
+   "label": "Message"
+  },
+  {
+   "fieldname": "file_id",
+   "fieldtype": "Link",
+   "label": "File",
+   "options": "File"
+  },
+  {
+   "fieldname": "file_label",
+   "fieldtype": "Data",
+   "label": "File Name"
+  },
+  {
+   "fieldname": "file_type",
+   "fieldtype": "Data",
+   "label": "Content Type"
+  },
+  {
+   "fieldname": "media_id",
+   "fieldtype": "Data",
+   "label": "WhatsApp Media ID"
+  },
+  {
+   "fieldname": "record_file",
+   "fieldtype": "Link",
+   "label": "Reference Attachment",
+   "options": "File"
+  },
+  {
+   "fieldname": "provider_id",
+   "fieldtype": "Data",
+   "label": "WhatsApp Message ID",
+   "unique": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Delivery Status",
+   "options": "\nQueued\nSending\nSent\nDelivered\nRead\nFailed\nUncertain"
+  },
+  {
+   "fieldname": "template",
+   "fieldtype": "Data",
+   "label": "WhatsApp Template"
+  },
+  {
+   "fieldname": "template_language",
+   "fieldtype": "Data",
+   "label": "Template Language"
+  }
+ ],
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

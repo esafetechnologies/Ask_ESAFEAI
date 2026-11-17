@@ -1,0 +1,62 @@
+{
+ "doctype": "DocType",
+ "name": "ASK ESAFE AI WhatsApp Settings",
+ "module": "ASK ESAFE AI",
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "phone_number_id",
+  "api_version",
+  "access_token",
+  "app_secret",
+  "verify_token",
+  "approved_templates"
+ ],
+ "fields": [
+  {
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enable WhatsApp Inbox"
+  },
+  {
+   "fieldname": "phone_number_id",
+   "fieldtype": "Data",
+   "label": "Meta Phone Number ID"
+  },
+  {
+   "fieldname": "api_version",
+   "fieldtype": "Data",
+   "label": "Graph API Version"
+  },
+  {
+   "fieldname": "access_token",
+   "fieldtype": "Password",
+   "label": "Access Token"
+  },
+  {
+   "fieldname": "app_secret",
+   "fieldtype": "Password",
+   "label": "App Secret"
+  },
+  {
+   "fieldname": "verify_token",
+   "fieldtype": "Password",
+   "label": "Webhook Verification Token"
+  },
+  {
+   "fieldname": "approved_templates",
+   "fieldtype": "Small Text",
+   "label": "Approved Templates (name:language per line, no variables)"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "issingle": 1
+}

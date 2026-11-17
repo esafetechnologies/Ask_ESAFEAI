@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_NAME="ask_alyf"
+REPO_NAME="ask_esafe_ai"
 REPO_PATH="/workspace/${REPO_NAME}"
 BENCH_ROOT="/workspace/frappe-bench"
 SITE_NAME="test_site"

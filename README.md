@@ -1,14 +1,14 @@
-# Ask ALYF
+# ASK ESAFE AI
 
-Ask ALYF adds an assistant to ERPNext so users can ask questions, find information, and get help working with documents without leaving the Desk.
+<img src="ask_esafe_ai/public/img/esafe-ai-wordmark.svg" alt="ESAFE AI, Explore Safe Solutions" width="340">
+
+ASK ESAFE AI adds an assistant to ERPNext so users can ask questions, find information, and get help working with documents without leaving the Desk.
 
 It is built for teams that already use ERPNext and want a practical assistant inside their existing system, not a separate chat product with a separate permission model.
 
-[![Ask ALYF: Tutorial and Review on YouTube](./assets/ask_alyf_video_thumbnail.jpg)](https://youtu.be/hDqQaanfPKE)
-
 ## What You Can Do
 
-Use Ask ALYF to:
+Use ASK ESAFE AI to:
 
 - ask questions about records, reports, configuration, and installed apps
 - summarize documents and data that the current user is allowed to see
@@ -28,19 +28,17 @@ Agent mode is for taking action. The assistant can prepare changes such as creat
 
 ## Field Writing Help
 
-![Field Writing Help](./assets/ask_alyf_field_agent.gif)
-
-Ask ALYF can also add a small sparkles button next to long text fields on Desk forms. Users can describe what they want written, and the assistant fills the field in place.
+ASK ESAFE AI can also add a small sparkles button next to long text fields on Desk forms. Users can describe what they want written, and the assistant fills the field in place.
 
 This is useful for descriptions, emails, internal notes, terms, and other longer text fields. After text is inserted, an *Undo* action is available for a few seconds.
 
-The field assistant is available only to users with the **Ask ALYF User** role and when _Allow Field Agent_ is enabled in **Ask ALYF Settings**.
+The field assistant is available only to users with the **ASK ESAFE AI User** role and when _Allow Field Agent_ is enabled in **ASK ESAFE AI Settings**.
 
 ## Built For Frappe
 
-Ask ALYF stays close to the Frappe Framework. It uses the existing Desk, the standard file uploader, **Frappe Charts**, and the same role-based permissions users already have in ERPNext.
+ASK ESAFE AI stays close to the Frappe Framework. It uses the existing Desk, the standard file uploader, **Frappe Charts**, and the same role-based permissions users already have in ERPNext.
 
-The assistant does not become an all-powerful back door. If a user cannot read or change something through Frappe permissions, Ask ALYF should not be able to do it for them either.
+The assistant does not become an all-powerful back door. If a user cannot read or change something through Frappe permissions, ASK ESAFE AI should not be able to do it for them either.
 
 ## Voice Input
 
@@ -48,7 +46,7 @@ Users can type messages. In browsers that support the Web Speech API, the chat b
 
 ## Skills
 
-Skills are reusable instructions stored in the **Ask ALYF Skill** DocType. Use them to teach the assistant a procedure that your team repeats, such as how a document must be created in your company.
+Skills are reusable instructions stored in the **ASK ESAFE AI Skill** DocType. Use them to teach the assistant a procedure that your team repeats, such as how a document must be created in your company.
 
 A skill has three parts:
 
@@ -58,7 +56,7 @@ A skill has three parts:
 
 Every request lists the titles of the skills available to the current user's roles. When a title looks relevant, the assistant calls `read_skill` to load the full description and then follows it. Role access is checked again on read, so a user never receives a skill that is not assigned to one of their roles.
 
-Skills are created and edited by users with the **System Manager** role. In Agent mode, users who may create an **Ask ALYF Skill** can also ask the assistant to write one for them with `write_skill`, which prepares a proposal that must be confirmed like any other write.
+Skills are created and edited by users with the **System Manager** role. In Agent mode, users who may create an **ASK ESAFE AI Skill** can also ask the assistant to write one for them with `write_skill`, which prepares a proposal that must be confirmed like any other write.
 
 ### Example Skill
 
@@ -88,7 +86,7 @@ Note how the description names DocTypes and fields directly. The assistant can l
 
 ## Access And Safety
 
-Access is granted through the **Ask ALYF User** role.
+Access is granted through the **ASK ESAFE AI User** role.
 
 The assistant works with the permissions of the logged-in user. A user with limited access only gets limited answers and limited actions; an Administrator can do more because the Administrator can already do more in ERPNext.
 
@@ -97,13 +95,13 @@ Agent mode has additional guardrails:
 - Every write operation requires explicit user confirmation before execution.
 - Bulk writes are intentionally limited. `batch_insert` can create multiple records of the same DocType, but each row still goes through framework validation.
 - Framework rules are respected. For example, submitted documents must be cancelled before they can be deleted.
-- Administrators can exclude selected DocTypes from Agent mode in **Ask ALYF Settings**.
+- Administrators can exclude selected DocTypes from Agent mode in **ASK ESAFE AI Settings**.
 
 Read-only SQL is available only to Administrator and System Manager users.
 
 ## Configuration
 
-Configure Ask ALYF in **Ask ALYF Settings**.
+Configure ASK ESAFE AI in **ASK ESAFE AI Settings**.
 
 Common settings include:
 
@@ -121,15 +119,15 @@ Common settings include:
 - separate vision model settings, if document and image extraction should use a different model
 - _Enable Tracing_, _LangSmith API Key_, _LangSmith Endpoint_, and _LangSmith Project_
 
-_System Prompt_ is added on top of the built-in instructions, not instead of them. Ask ALYF already tells the assistant how to behave, which tools to use, and how to respect permissions. Put only company-specific context here, such as your company name, the language to answer in, or conventions the assistant cannot read from the data. For step-by-step procedures, write a skill instead of adding it to the system prompt, so the instructions load only when they are relevant and only for the roles that need them.
+_System Prompt_ is added on top of the built-in instructions, not instead of them. ASK ESAFE AI already tells the assistant how to behave, which tools to use, and how to respect permissions. Put only company-specific context here, such as your company name, the language to answer in, or conventions the assistant cannot read from the data. For step-by-step procedures, write a skill instead of adding it to the system prompt, so the instructions load only when they are relevant and only for the roles that need them.
 
-Ask ALYF chat requires the [OpenAI Responses API](https://developers.openai.com/api/reference/resources/responses). OpenAI-compatible _Base URLs_ must implement `POST /v1/responses`. Providers that support only Chat Completions are not supported for chat.
+ASK ESAFE AI chat requires the [OpenAI Responses API](https://developers.openai.com/api/reference/resources/responses). OpenAI-compatible _Base URLs_ must implement `POST /v1/responses`. Providers that support only Chat Completions are not supported for chat.
 
-When _Enable Tracing_ is on, Ask ALYF sends traces of agent runs to [LangSmith](https://smith.langchain.com). Traces include prompts, tool calls, and answers. They go to the _LangSmith Endpoint_ and _LangSmith Project_ you set. Leave tracing off if this data must stay on your site.
+When _Enable Tracing_ is on, ASK ESAFE AI sends traces of agent runs to [LangSmith](https://smith.langchain.com). Traces include prompts, tool calls, and answers. They go to the _LangSmith Endpoint_ and _LangSmith Project_ you set. Leave tracing off if this data must stay on your site.
 
 ## Conversation History
 
-Conversations are stored in the **Ask ALYF Conversation** DocType, which keeps messages available across page reloads and provides an audit trail for Agent mode proposals and actions.
+Conversations are stored in the **ASK ESAFE AI Conversation** DocType, which keeps messages available across page reloads and provides an audit trail for Agent mode proposals and actions.
 
 The coordinator rebuilds the full conversation history as native LangChain messages on each turn from the stored `messages_json` field. This keeps the source of truth in a single, user-visible DocType that respects owner-only permissions.
 
@@ -137,7 +135,7 @@ Old conversations are deleted after 90 days by default. The retention period can
 
 ## Technical Reference
 
-Ask ALYF uses tool calls to read data, inspect metadata, navigate the Desk, render charts, and prepare document changes. Data-access tools wrap Frappe APIs such as `frappe.client`, so normal framework permissions and validations continue to apply.
+ASK ESAFE AI uses tool calls to read data, inspect metadata, navigate the Desk, render charts, and prepare document changes. Data-access tools wrap Frappe APIs such as `frappe.client`, so normal framework permissions and validations continue to apply.
 
 ### Ask Mode Tools
 
@@ -157,7 +155,7 @@ Schema, permissions, and UI:
 - `list_accessible_doctypes` lists DocTypes the current user can read or write
 - `list_accessible_reports` lists reports the current user can access
 - `translate_ui_labels` translates UI labels so answers match the user's language
-- `read_skill` reads a stored **Ask ALYF Skill** the current user's roles allow
+- `read_skill` reads a stored **ASK ESAFE AI Skill** the current user's roles allow
 
 Files, printing, charts, and navigation:
 
@@ -211,7 +209,7 @@ Agent mode includes the Ask mode tools plus tools that prepare confirmed actions
 - `rename_doc` renames a document
 - `attach_file` attaches a **File** to a document
 - `run_whitelisted_method` calls an accessible `@frappe.whitelist()` method
-- `write_skill` proposes a new **Ask ALYF Skill**, for users who may create one
+- `write_skill` proposes a new **ASK ESAFE AI Skill**, for users who may create one
 - `frm_set_value` sets a field on the active form in the browser
 - `frm_add_child` adds a child table row on the active form in the browser
 
@@ -237,16 +235,32 @@ Install this app with the [bench](https://github.com/frappe/bench) CLI:
 
 ```bash
 cd $PATH_TO_YOUR_BENCH
-bench get-app $URL_OF_THIS_REPO --branch develop
-bench install-app ask_alyf
+bench get-app --branch develop ask_esafe_ai https://github.com/esafetechnologies/Ask_ESAFEAI.git
+bench --site your-site install-app ask_esafe_ai
 ```
+
+Existing deployments need a site migration to carry over settings, role assignments, and stored records to the new app and DocType names.
+
+## Team messaging and WhatsApp
+
+After updating, install the updated Python requirements, run `bench --site your-site migrate`, rebuild the app assets, and restart the web and background workers. Assign **ASK ESAFE AI Messaging User** to the enabled Desk users who should use **Messages** and **Notifications**. The launcher loads automatically throughout Desk. For a custom frontend hosted on the same Frappe origin, add this script once to the authenticated shared layout:
+
+```html
+<script defer src="/assets/ask_esafe_ai/js/messaging.js"></script>
+```
+
+Standard Frappe website pages also load the widget automatically for eligible signed-in users. The standalone widget uses the same site session and refreshes in the foreground when the frontend has no Frappe realtime client. Team uploads use private encrypted site storage. Keep the site's Frappe encryption key with file and database backups so restored uploads remain readable.
+
+To enable the two-way inbox, open **ASK ESAFE AI WhatsApp Settings** as a System Manager and enter the Meta Graph API version, business phone-number ID, access token, app secret, and a webhook verification token. In Meta's app, set the callback to `/api/method/ask_esafe_ai.ask_esafe_ai.whatsapp.webhook` on your HTTPS site, supply the matching verification token, and subscribe the business account to the `messages` webhook field. Enable the inbox and assign **ASK ESAFE AI WhatsApp Agent** to the staff handling customer messages. Start with Meta's test number before switching to the production number.
+
+Enter approved text templates without variables as one `name:language` per line. Record customer consent from the assigned agent's **Manage** view before selecting a template for a follow-up outside the 24-hour reply window. WhatsApp attachments support JPEG, PNG, PDF, text, and common Office documents, subject to the site and provider upload limits.
 
 ## Contributing
 
 This app uses `pre-commit` for code formatting and linting. Please [install pre-commit](https://pre-commit.com/#installation) and enable it for this repository:
 
 ```bash
-cd apps/ask_alyf
+cd apps/ask_esafe_ai
 pre-commit install
 ```
 
@@ -267,11 +281,11 @@ Search uses ripgrep (`rg`) when available, with a Python fallback for missing to
 Both paths use the same file selection rules and limit each matching line to 300 characters.
 Frappe Cloud installs ripgrep through `pyproject.toml`. On other hosts, install it with the system package manager to enable native search.
 
-Run the optional benchmark from the bench directory against a test site with Ask ALYF installed:
+Run the optional benchmark from the bench directory against a test site with ASK ESAFE AI installed:
 
 ```bash
-ASK_ALYF_BENCHMARK_SOURCE_GREP=1 bench --site test_site run-tests \
-  --module ask_alyf.ask_alyf.test_source_grep --test test_installed_app_search_timings
+ASK_ESAFE_AI_BENCHMARK_SOURCE_GREP=1 bench --site test_site run-tests \
+  --module ask_esafe_ai.ask_esafe_ai.test_source_grep --test test_installed_app_search_timings
 ```
 
 The benchmark reports file counts and search times for native search and the Python fallback. It has no timing assertions.
@@ -285,7 +299,7 @@ This app can use GitHub Actions for CI. The configured workflows are:
 
 ## Privacy
 
-Ask ALYF is self-hosted. The published source code does not send usage data, analytics, or chat contents to the maintainers of this project.
+ASK ESAFE AI is self-hosted. The published source code does not send usage data, analytics, or chat contents to the maintainers of this project.
 
 The app calls the LLM and related providers you configure. Text, context, and uploaded documents may be processed by those providers under their privacy policies and terms. If you enable LangSmith tracing, traces of agent runs also go to LangSmith. See [PRIVACY.md](PRIVACY.md).
 
@@ -293,4 +307,4 @@ The app calls the LLM and related providers you configure. Text, context, and up
 
 This project is licensed under the [GNU Affero General Public License v3.0](license.txt) (AGPL-3.0).
 
-If you want to use Ask ALYF under different terms, for example to whitelabel or rebrand it without the AGPL's copyleft requirements, commercial licenses are available. Contact [hallo@alyf.de](mailto:hallo@alyf.de) for details.
+This project was modified on November 17, 2026 to adopt the ASK ESAFE AI name and update its Frappe identifiers.

@@ -1,12 +1,12 @@
 {
-  "name": "ask_alyf",
+  "name": "ask_esafe_ai",
   "forwardPorts": [8000, 9000, 6787],
   "remoteUser": "frappe",
   "dockerComposeFile": "./docker-compose.yml",
   "service": "frappe",
   "workspaceFolder": "/workspace/frappe-bench",
   "shutdownAction": "stopCompose",
-  "postCreateCommand": "bash /workspace/ask_alyf/.devcontainer/setup.sh",
+  "postCreateCommand": "bash /workspace/ask_esafe_ai/.devcontainer/setup.sh",
   "mounts": [
     "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/frappe/.ssh,type=bind,consistency=cached"
   ],

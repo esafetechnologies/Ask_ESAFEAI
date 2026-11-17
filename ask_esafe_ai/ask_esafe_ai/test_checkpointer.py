@@ -1,0 +1,440 @@
+# Copyright (c) 2026, ALYF GmbH and Contributors
+# See license.txt
+
+from __future__ import annotations
+
+import operator
+from concurrent.futures import ThreadPoolExecutor
+from types import SimpleNamespace
+from typing import Annotated, TypedDict
+from unittest.mock import patch
+
+import frappe
+from frappe.tests import IntegrationTestCase
+from frappe.utils import add_days, now_datetime
+from langchain.agents import create_agent
+from langchain_core.language_models import FakeMessagesListChatModel
+from langchain_core.messages import AIMessage, AnyMessage, HumanMessage, ToolMessage
+from langgraph.checkpoint.base import empty_checkpoint
+from langgraph.graph import END, START, StateGraph
+from langgraph.graph.message import add_messages
+from langgraph.types import Command, interrupt
+from rq.timeouts import JobTimeoutException
+
+from ask_esafe_ai.ask_esafe_ai.agent import ToolCallLogMiddleware, ask_esafe_aiAgentRunner
+from ask_esafe_ai.ask_esafe_ai.checkpointer import (
+	CHECKPOINT_DOCTYPE,
+	CHECKPOINT_WRITE_DOCTYPE,
+	FrappeCheckpointSaver,
+)
+from ask_esafe_ai.ask_esafe_ai.doctype.ask_esafe_ai_conversation.ask_esafe_ai_conversation import AskESAFEAIConversation
+from ask_esafe_ai.ask_esafe_ai.toolset import (
+	OPERATION_INTERRUPT_KEY,
+	ask_esafe_aiRuntime,
+	ask_esafe_aiToolset,
+	clear_stop_request,
+	in_private_frappe_context,
+	is_stop_requested,
+	request_stop,
+)
+
+THREAD = "test-checkpointer-thread"
+RUN = "test-checkpointer-run"
+
+
+class _ScriptedModel(FakeMessagesListChatModel):
+	"""A model that replays fixed replies, so a run is driven by the test."""
+
+	def bind_tools(self, tools, **kwargs):
+		return self
+
+
+def _config(checkpoint_id: str | None = None, thread: str = THREAD) -> dict:
+	configurable = {"thread_id": thread, "checkpoint_ns": ""}
+	if checkpoint_id:
+		configurable["checkpoint_id"] = checkpoint_id
+	return {"configurable": configurable}
+
+
+class _State(TypedDict):
+	steps: Annotated[list[str], operator.add]
+	messages: Annotated[list[AnyMessage], add_messages]
+
+
+class IntegrationTestFrappeCheckpointSaver(IntegrationTestCase):
+	def setUp(self):
+		self.saver = FrappeCheckpointSaver()
+		self.addCleanup(self._clear)
+		self._clear()
+
+	def _clear(self):
+		for doctype in (CHECKPOINT_DOCTYPE, CHECKPOINT_WRITE_DOCTYPE):
+			frappe.db.delete(doctype, {"thread_id": ("like", "test-checkpointer-%")})
+
+	def _put(self, checkpoint_id: str, parent_id: str | None = None, step: int = 0, thread: str = THREAD):
+		checkpoint = empty_checkpoint()
+		checkpoint["id"] = checkpoint_id
+		checkpoint["channel_values"] = {"steps": [f"value-{checkpoint_id}"]}
+		return self.saver.put(
+			_config(parent_id, thread=thread), checkpoint, {"source": "loop", "step": step}, {}
+		)
+
+	def test_put_then_get_tuple_roundtrips_checkpoint_and_metadata(self):
+		self._put("00000000-0000-6000-8000-000000000001", step=1)
+
+		stored = self.saver.get_tuple(_config())
+		self.assertIsNotNone(stored)
+		self.assertEqual(stored.checkpoint["id"], "00000000-0000-6000-8000-000000000001")
+		self.assertEqual(
+			stored.checkpoint["channel_values"]["steps"], ["value-00000000-0000-6000-8000-000000000001"]
+		)
+		self.assertEqual(stored.metadata["step"], 1)
+		self.assertIsNone(stored.parent_config)
+
+	def test_get_tuple_without_id_returns_latest_and_links_parent(self):
+		first = "00000000-0000-6000-8000-000000000001"
+		second = "00000000-0000-6000-8000-000000000002"
+		self._put(first)
+		self._put(second, parent_id=first)
+
+		latest = self.saver.get_tuple(_config())
+		self.assertEqual(latest.checkpoint["id"], second)
+		self.assertEqual(latest.parent_config["configurable"]["checkpoint_id"], first)
+
+		# An explicit ID still reaches the older checkpoint.
+		older = self.saver.get_tuple(_config(first))
+		self.assertEqual(older.checkpoint["id"], first)
+
+	def test_put_is_idempotent_per_checkpoint_id(self):
+		checkpoint_id = "00000000-0000-6000-8000-000000000001"
+		self._put(checkpoint_id, step=1)
+		self._put(checkpoint_id, step=2)
+		self.saver.flush()
+
+		self.assertEqual(frappe.db.count(CHECKPOINT_DOCTYPE, {"thread_id": THREAD}), 1)
+		self.assertEqual(self.saver.get_tuple(_config()).metadata["step"], 2)
+
+	def test_put_writes_keeps_first_regular_write_and_overwrites_special_writes(self):
+		checkpoint_id = "00000000-0000-6000-8000-000000000001"
+		self._put(checkpoint_id)
+		config = _config(checkpoint_id)
+
+		self.saver.put_writes(config, [("steps", "first")], "task-1")
+		self.saver.flush()
+		# Once from the buffer, once against the stored row.
+		self.saver.put_writes(config, [("steps", "ignored")], "task-1")
+		self.saver.put_writes(config, [("steps", "ignored")], "task-1")
+		# `__resume__` is a special channel: it maps to a negative index and
+		# must replace the stored value instead of being skipped.
+		self.saver.put_writes(config, [("__resume__", "one")], "task-1")
+		self.saver.put_writes(config, [("__resume__", "two")], "task-1")
+
+		pending = self.saver.get_tuple(config).pending_writes
+		self.assertEqual(
+			sorted((channel, value) for _, channel, value in pending),
+			[("__resume__", "two"), ("steps", "first")],
+		)
+
+	def test_writes_of_other_tasks_and_threads_are_not_mixed_in(self):
+		checkpoint_id = "00000000-0000-6000-8000-000000000001"
+		self._put(checkpoint_id)
+		config = _config(checkpoint_id)
+		self.saver.put_writes(config, [("steps", "mine")], "task-1")
+		self.saver.put_writes(config, [("steps", "theirs")], "task-2")
+
+		# Same checkpoint ID, different thread: must stay separate.
+		other_thread = "test-checkpointer-other"
+		self._put(checkpoint_id, thread=other_thread)
+		self.saver.put_writes(_config(checkpoint_id, thread=other_thread), [("steps", "elsewhere")], "task-1")
+
+		pending = self.saver.get_tuple(config).pending_writes
+		self.assertEqual(sorted(value for _, _, value in pending), ["mine", "theirs"])
+
+	def test_list_orders_newest_first_and_honours_before_limit_and_filter(self):
+		ids = [f"00000000-0000-6000-8000-00000000000{n}" for n in (1, 2, 3)]
+		parent = None
+		for step, checkpoint_id in enumerate(ids):
+			self._put(checkpoint_id, parent_id=parent, step=step)
+			parent = checkpoint_id
+
+		listed = [tuple_.checkpoint["id"] for tuple_ in self.saver.list(_config())]
+		self.assertEqual(listed, list(reversed(ids)))
+
+		before = [t.checkpoint["id"] for t in self.saver.list(_config(), before=_config(ids[2]))]
+		self.assertEqual(before, [ids[1], ids[0]])
+
+		limited = [t.checkpoint["id"] for t in self.saver.list(_config(), limit=1)]
+		self.assertEqual(limited, [ids[2]])
+
+		filtered = [t.checkpoint["id"] for t in self.saver.list(_config(), filter={"step": 1})]
+		self.assertEqual(filtered, [ids[1]])
+
+	def test_delete_thread_removes_checkpoints_and_writes(self):
+		checkpoint_id = "00000000-0000-6000-8000-000000000001"
+		self._put(checkpoint_id)
+		self.saver.put_writes(_config(checkpoint_id), [("steps", "first")], "task-1")
+
+		self.saver.flush()
+		self.saver.delete_thread(THREAD)
+
+		self.assertIsNone(self.saver.get_tuple(_config()))
+		self.assertEqual(frappe.db.count(CHECKPOINT_WRITE_DOCTYPE, {"thread_id": THREAD}), 0)
+
+	def test_graph_resumes_state_from_the_database_across_invocations(self):
+		def append(state: _State) -> _State:
+			step = f"step-{len(state['steps']) + 1}"
+			return {"steps": [step], "messages": [AIMessage(content=step, id=step)]}
+
+		builder = StateGraph(_State)
+		builder.add_node("append", append)
+		builder.add_edge(START, "append")
+		builder.add_edge("append", END)
+		graph = builder.compile(checkpointer=self.saver)
+
+		config = {"configurable": {"thread_id": THREAD}}
+		graph.invoke({"steps": [], "messages": [HumanMessage(content="go", id="user-1")]}, config)
+		self.saver.flush()
+
+		# A fresh saver proves the state came back from the database, not memory.
+		second_saver = FrappeCheckpointSaver()
+		resumed = builder.compile(checkpointer=second_saver).invoke({"steps": []}, config)
+		second_saver.flush()
+
+		self.assertEqual(resumed["steps"], ["step-1", "step-2"])
+		# LangChain messages survive the round trip unchanged, IDs included.
+		self.assertEqual([m.id for m in resumed["messages"]], ["user-1", "step-1", "step-2"])
+		self.assertIsInstance(resumed["messages"][0], HumanMessage)
+		self.assertEqual(self.saver.get_tuple(config).checkpoint["channel_values"]["steps"], resumed["steps"])
+
+	def test_writes_from_a_background_thread_are_persisted_by_the_flushing_thread(self):
+		# LangGraph calls put/put_writes on its background executor, where the
+		# Frappe connection of this thread must not be touched.
+		checkpoint_id = "00000000-0000-6000-8000-000000000001"
+		with ThreadPoolExecutor(max_workers=1) as executor:
+			executor.submit(self._put, checkpoint_id).result()
+			executor.submit(
+				self.saver.put_writes, _config(checkpoint_id), [("steps", "from-thread")], "task-1"
+			).result()
+			# Nothing has touched the database yet.
+			self.assertEqual(frappe.db.count(CHECKPOINT_DOCTYPE, {"thread_id": THREAD}), 0)
+
+		stored = self.saver.get_tuple(_config())
+		self.assertEqual(stored.checkpoint["id"], checkpoint_id)
+		self.assertEqual([value for _, _, value in stored.pending_writes], ["from-thread"])
+
+	def test_interrupted_run_resumes_from_the_database_in_a_later_session(self):
+		def ask(state: _State) -> _State:
+			answer = interrupt("confirm?")
+			return {"steps": [f"answered-{answer}"]}
+
+		builder = StateGraph(_State)
+		builder.add_node("ask", ask)
+		builder.add_edge(START, "ask")
+		builder.add_edge("ask", END)
+
+		config = {"configurable": {"thread_id": THREAD}}
+		result = builder.compile(checkpointer=self.saver).invoke({"steps": ["before"]}, config)
+		self.saver.flush()
+		self.assertTrue(result["__interrupt__"])
+
+		# Fresh saver: the pending interrupt is read back from the database.
+		resuming_saver = FrappeCheckpointSaver()
+		resumed = builder.compile(checkpointer=resuming_saver).invoke(Command(resume="yes"), config)
+		resuming_saver.flush()
+
+		self.assertEqual(resumed["steps"], ["before", "answered-yes"])
+
+	def test_a_confirmable_tool_pauses_the_agent_and_resumes_from_the_database(self):
+		"""The whole path: propose, checkpoint, confirm in a later request, execute.
+
+		This is the one that would break silently — the tool runs behind the
+		Frappe context wrapper, inside a real tool node, and the confirmation
+		arrives in a different process with a different saver.
+		"""
+		runtime = ask_esafe_aiRuntime(conversation_name=THREAD, mode="Agent", request_context={})
+		tool = in_private_frappe_context(ask_esafe_aiToolset(runtime).set_value)
+		tool_call = {
+			"name": "set_value",
+			"args": {
+				"doctype": "ToDo",
+				"name": "TODO-0001",
+				"fieldname": "status",
+				"value": "Closed",
+			},
+			"id": "call-1",
+		}
+		config = {"configurable": {"thread_id": THREAD}}
+
+		proposing = create_agent(
+			model=_ScriptedModel(responses=[AIMessage(content="", tool_calls=[tool_call])]),
+			tools=[tool],
+			middleware=[ToolCallLogMiddleware(runtime)],
+			checkpointer=self.saver,
+		)
+		result = proposing.invoke({"messages": [HumanMessage("close TODO-0001")]}, config)
+		self.saver.flush()
+
+		operation = result["__interrupt__"][0].value[OPERATION_INTERRUPT_KEY]
+		self.assertEqual(operation["tool"], "set_value")
+		self.assertEqual(operation["payload"]["value"], "Closed")
+		# Nothing ran yet: the agent is holding inside the tool, so the call is
+		# not in the log either.
+		self.assertFalse(any(isinstance(m, ToolMessage) for m in result["messages"]))
+		self.assertEqual(runtime.tool_calls, [])
+
+		# A later request, with its own saver, reads the pause back from the
+		# database and hands over the confirmation.
+		resuming_saver = FrappeCheckpointSaver()
+		resuming = create_agent(
+			model=_ScriptedModel(responses=[AIMessage(content="Closed TODO-0001.")]),
+			tools=[tool],
+			middleware=[ToolCallLogMiddleware(runtime)],
+			checkpointer=resuming_saver,
+		)
+		with patch(
+			"ask_esafe_ai.ask_esafe_ai.tools.execute_pending_operation",
+			return_value={"name": "TODO-0001"},
+		) as execute_operation:
+			resumed = resuming.invoke(
+				Command(resume={"call_id": operation["call_id"], "status": "approved"}),
+				config,
+			)
+		resuming_saver.flush()
+
+		execute_operation.assert_called_once()
+		self.assertNotIn("__interrupt__", resumed)
+		self.assertEqual(resumed["messages"][-1].text, "Closed TODO-0001.")
+		# The confirmed call is logged once, for the conversation to show.
+		self.assertEqual(
+			[(call["name"], call["status"]) for call in runtime.tool_calls],
+			[("set_value", "success")],
+		)
+
+	def _make_conversation(self):
+		return frappe.get_doc(
+			doctype="ASK ESAFE AI Conversation",
+			title="Checkpointer Test",
+			status="Active",
+			messages_json="[]",
+		).insert(ignore_permissions=True)
+
+	def _store_state_for(self, conversation_name: str) -> None:
+		checkpoint_id = "00000000-0000-6000-8000-000000000001"
+		self._put(checkpoint_id, thread=conversation_name)
+		self.saver.put_writes(_config(checkpoint_id, thread=conversation_name), [("steps", "x")], "task-1")
+		self.saver.flush()
+		self.assertEqual(frappe.db.count(CHECKPOINT_DOCTYPE, {"thread_id": conversation_name}), 1)
+
+	def _assert_no_state_for(self, conversation_name: str) -> None:
+		for doctype in (CHECKPOINT_DOCTYPE, CHECKPOINT_WRITE_DOCTYPE):
+			self.assertEqual(frappe.db.count(doctype, {"thread_id": conversation_name}), 0)
+
+	def test_deleting_a_conversation_deletes_its_stored_state(self):
+		conversation = self._make_conversation()
+		self._store_state_for(conversation.name)
+
+		conversation.delete(ignore_permissions=True)
+
+		self._assert_no_state_for(conversation.name)
+
+	def test_clearing_old_conversations_deletes_their_stored_state(self):
+		conversation = self._make_conversation()
+		self._store_state_for(conversation.name)
+		frappe.db.set_value(
+			"ASK ESAFE AI Conversation",
+			conversation.name,
+			"creation",
+			add_days(now_datetime(), -120),
+			update_modified=False,
+		)
+
+		AskESAFEAIConversation.clear_old_logs(days=90)
+
+		self.assertFalse(frappe.db.exists("ASK ESAFE AI Conversation", conversation.name))
+		self._assert_no_state_for(conversation.name)
+
+	def test_a_run_killed_mid_flight_keeps_the_steps_it_finished(self):
+		# RQ's death penalty lands wherever the run happens to be. The steps
+		# that completed before it must survive, so the retry does not pay for
+		# them a second time.
+		def first(state: _State) -> _State:
+			return {"steps": ["step-1"]}
+
+		def killed(state: _State) -> _State:
+			raise JobTimeoutException("job exceeded maximum timeout value")
+
+		builder = StateGraph(_State)
+		builder.add_node("first", first)
+		builder.add_node("killed", killed)
+		builder.add_edge(START, "first")
+		builder.add_edge("first", "killed")
+		builder.add_edge("killed", END)
+
+		runner = ask_esafe_aiAgentRunner.__new__(ask_esafe_aiAgentRunner)
+		runner.agent = builder.compile(checkpointer=self.saver)
+		runner.checkpointer = self.saver
+		runner.runtime = SimpleNamespace(conversation_name=THREAD, mode="Ask")
+		runner.settings = SimpleNamespace(enable_tracing=0, get_password=lambda *_args, **_kwargs: "")
+
+		with self.assertRaises(JobTimeoutException):
+			runner._run_graph({"steps": []})
+
+		# A fresh saver proves the flush reached the database, not just memory.
+		stored = FrappeCheckpointSaver().get_tuple(_config())
+		self.assertEqual(stored.checkpoint["channel_values"]["steps"], ["step-1"])
+
+	def test_pressing_stop_ends_the_run_before_the_next_model_call(self):
+		runtime = ask_esafe_aiRuntime(conversation_name=THREAD, mode="Ask", request_context={}, run_id=RUN)
+		agent = create_agent(
+			model=_ScriptedModel(responses=[AIMessage(content="the answer")]),
+			tools=[],
+			middleware=[ToolCallLogMiddleware(runtime)],
+			checkpointer=self.saver,
+		)
+		config = {"configurable": {"thread_id": THREAD}}
+		self.addCleanup(clear_stop_request, RUN)
+
+		request_stop(RUN)
+		stopped = agent.invoke({"messages": [HumanMessage("something slow")]}, config)
+		self.saver.flush()
+
+		# The model was never reached, and the turn is stored, so the next
+		# message continues from here instead of starting over.
+		self.assertTrue(runtime.stop_requested)
+		self.assertEqual([m.content for m in stopped["messages"]], ["something slow"])
+		self.assertIsNotNone(FrappeCheckpointSaver().get_tuple(_config()))
+
+		# Once the flag is gone the same agent runs normally again.
+		clear_stop_request(RUN)
+		runtime.stop_requested = False
+		resumed = agent.invoke({"messages": [HumanMessage("go on")]}, config)
+		self.saver.flush()
+		self.assertEqual(resumed["messages"][-1].content, "the answer")
+
+	def test_a_stop_pressed_mid_run_is_seen_by_the_next_check(self):
+		# `request_stop` runs in the web request, `is_stop_requested` in the
+		# worker. The two share redis but never `frappe.local.cache`, so the
+		# worker keeps whatever its own first read put there. Restoring that
+		# cache around the stop is what makes this the two processes it really
+		# is: without it the write would tidy up after itself in-process and
+		# the check below would pass even unfixed.
+		self.addCleanup(clear_stop_request, RUN)
+
+		self.assertFalse(is_stop_requested(RUN))
+		worker_cache = dict(frappe.local.cache)
+		request_stop(RUN)
+		frappe.local.cache = worker_cache
+
+		self.assertTrue(is_stop_requested(RUN))
+
+	def test_a_serializer_clone_writes_into_the_same_buffer(self):
+		# LangGraph may swap the saver for a `with_allowlist` clone. Only the
+		# original is flushed by the runner, so both must share one buffer.
+		clone = self.saver.with_allowlist([("ask_esafe_ai", "Thing")])
+		checkpoint = empty_checkpoint()
+		checkpoint["id"] = "00000000-0000-6000-8000-000000000001"
+		clone.put(_config(), checkpoint, {"source": "loop", "step": 0}, {})
+
+		self.saver.flush()
+
+		self.assertEqual(frappe.db.count(CHECKPOINT_DOCTYPE, {"thread_id": THREAD}), 1)

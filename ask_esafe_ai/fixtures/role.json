@@ -1,0 +1,14 @@
+[
+ {
+  "doctype": "Role",
+  "name": "ASK ESAFE AI Messaging User",
+  "role_name": "ASK ESAFE AI Messaging User",
+  "desk_access": 1
+ },
+ {
+  "doctype": "Role",
+  "name": "ASK ESAFE AI WhatsApp Agent",
+  "role_name": "ASK ESAFE AI WhatsApp Agent",
+  "desk_access": 1
+ }
+]

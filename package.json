@@ -1,7 +1,7 @@
 {
-  "name": "ask_alyf",
+  "name": "ask_esafe_ai",
   "private": true,
-  "author": "ALYF GmbH <hallo@alyf.de>",
+  "repository": "github:esafetechnologies/Ask_ESAFEAI",
   "license": "AGPL-3.0-only",
   "dependencies": {
     "pele": "^1.12.0"

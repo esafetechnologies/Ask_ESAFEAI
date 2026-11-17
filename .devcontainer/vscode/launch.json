@@ -41,7 +41,7 @@
       "console": "integratedTerminal"
     },
     {
-      "name": "Bench: Test ask_alyf",
+      "name": "Bench: Test ask_esafe_ai",
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/apps/frappe/frappe/utils/bench_helper.py",
@@ -51,7 +51,7 @@
         "test_site",
         "run-tests",
         "--app",
-        "ask_alyf"
+        "ask_esafe_ai"
       ],
       "python": "${workspaceFolder}/env/bin/python",
       "cwd": "${workspaceFolder}/sites",
@@ -109,7 +109,7 @@
       "type": "promptString",
       "id": "testModule",
       "description": "Dotted test module",
-      "default": "ask_alyf.ask_alyf.test_api"
+      "default": "ask_esafe_ai.ask_esafe_ai.test_api"
     }
   ]
 }

@@ -1,0 +1,28 @@
+{
+ "app": "ask_esafe_ai",
+ "creation": "2026-03-16 02:18:16.616588",
+ "docstatus": 0,
+ "doctype": "Workspace Sidebar",
+ "idx": 0,
+ "items": [
+  {
+   "child": 0,
+   "collapsible": 1,
+   "icon": "settings",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "ASK ESAFE AI Settings",
+   "link_to": "ASK ESAFE AI Settings",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-03-16 02:21:15.979417",
+ "modified_by": "Administrator",
+ "module": "ASK ESAFE AI",
+ "name": "ASK ESAFE AI",
+ "owner": "Administrator",
+ "standard": 1,
+ "title": "ASK ESAFE AI"
+}
