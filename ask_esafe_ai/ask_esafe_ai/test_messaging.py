@@ -82,6 +82,18 @@ class IntegrationTestMessaging(IntegrationTestCase):
 
 
 class UnitTestWhatsAppMessaging(UnitTestCase):
+	def test_directory_includes_users_with_effective_messaging_access(self):
+		administrator = frappe._dict(name="Administrator", full_name="Administrator")
+		staff = frappe._dict(name="staff@example.com", full_name="Staff")
+		other = frappe._dict(name="other@example.com", full_name="Other")
+		with (
+			patch.object(frappe, "get_all", return_value=[administrator, staff, other]) as get_all,
+			patch.object(chat, "has_role", side_effect=lambda role, user: user in {"Administrator", staff.name}),
+		):
+			self.assertEqual(chat.eligible_users(chat.TEAM_ROLE), [administrator, staff])
+			get_all.assert_called_once_with("User", filters={"enabled": 1, "user_type": "System User"},
+				fields=["name", "full_name"], order_by="full_name asc")
+
 	def test_group_access_requires_active_membership(self):
 		thread = SimpleNamespace(name="private-thread", kind="Group")
 		with patch.object(chat, "membership", return_value=None), patch.object(chat, "has_role", return_value=True):

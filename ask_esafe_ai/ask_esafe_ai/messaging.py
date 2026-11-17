@@ -97,11 +97,11 @@ def set_member(thread, user, sequence=0):
 
 
 def eligible_users(role):
-	users = frappe.get_all("Has Role", filters={"role": role, "parenttype": "User"}, pluck="parent")
-	return frappe.get_all(
-		"User", filters={"enabled": 1, "user_type": "System User", "name": ["in", users]},
+	users = frappe.get_all(
+		"User", filters={"enabled": 1, "user_type": "System User"},
 		fields=["name", "full_name"], order_by="full_name asc",
-	) if users else []
+	)
+	return [user for user in users if has_role(role, user.name)]
 
 
 def changed(thread, extra=()):
@@ -131,6 +131,7 @@ def bootstrap():
 	return {
 		"team": team, "whatsapp": agent, "user": frappe.session.user if team or agent else None,
 		"csrf": get_csrf_token() if team or agent else None,
+		"can_manage_users": bool((team or agent) and frappe.has_permission("User", "write")),
 	}
 
 

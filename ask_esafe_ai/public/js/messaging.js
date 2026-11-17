@@ -382,27 +382,65 @@
 
 		async newChat() {
 			const directory = await this.call("users");
+			const people = directory.filter((row) => row.name !== this.access.user);
 			const kind = select([["0", translate("Direct message")], ["1", translate("Private group")]]);
-			const members = select(directory.filter((row) => row.name !== this.access.user)
-				.map((row) => [row.name, row.full_name || row.name]));
+			const members = select([
+				["", translate(people.length ? "Select a person" : "No users available")],
+				...people.map((row) => [row.name, row.full_name ? row.full_name + " (" + row.name + ")" : row.name]),
+			]);
+			const placeholder = members.options[0];
+			placeholder.disabled = true;
+			members.disabled = !people.length;
 			const name = input("Group name");
 			const nameField = label("Group name", name);
 			nameField.hidden = true;
-			kind.addEventListener("change", () => {
-				nameField.hidden = kind.value !== "1";
-				members.multiple = kind.value === "1";
-			});
-			const form = element("div", "esafe-messaging-form");
-			form.append(button("Back", () => this.closeThread()), label("Conversation type", kind),
-				nameField, label("People", members), button("Start chat", () => this.run(async () => {
+			const start = button("Start chat", () => this.run(async () => {
+				start.disabled = true;
+				try {
 					const thread = await this.call("start_thread", {
-						members: [...members.selectedOptions].map((option) => option.value),
+						members: [...members.selectedOptions].map((option) => option.value).filter(Boolean),
 						title: name.value, group: Number(kind.value),
 					}, true);
 					this.formOpen = false;
 					await this.openThread(await this.call("thread_info", { thread }));
 					await this.refresh();
-				})));
+				} finally {
+					validate();
+				}
+			}));
+			const validate = () => {
+				const hasSelection = [...members.selectedOptions].some((option) => option.value);
+				start.disabled = !hasSelection || (kind.value === "1" && !name.value.trim());
+			};
+			kind.addEventListener("change", () => {
+				const group = kind.value === "1";
+				nameField.hidden = !group;
+				members.multiple = group;
+				members.size = group ? Math.min(Math.max(people.length, 3), 6) : 1;
+				placeholder.hidden = group;
+				members.value = "";
+				validate();
+			});
+			members.addEventListener("change", validate);
+			name.addEventListener("input", validate);
+			validate();
+			const form = element("div", "esafe-messaging-form");
+			form.append(button("Back", () => this.closeThread()), label("Conversation type", kind),
+				nameField, label("People", members));
+			if (!people.length) {
+				form.append(element("p", "esafe-messaging-empty", translate(
+					"No other chat-enabled ERPNext users are available. A System Manager needs to assign the ASK ESAFE AI Messaging User role to the people you want to message.",
+				)));
+				if (this.access.can_manage_users) {
+					const manage = element("a", "", translate("Manage users"));
+					manage.href = "/app/user";
+					manage.target = "_blank";
+					manage.rel = "noopener";
+					form.append(manage);
+				}
+				form.append(button("Refresh people", () => this.run(() => this.newChat())));
+			}
+			form.append(start);
 			this.formOpen = true;
 			this.content.replaceChildren(form);
 		}
