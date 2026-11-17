@@ -27,7 +27,7 @@ from ask_esafe_ai.ask_esafe_ai.checkpointer import (
 	CHECKPOINT_WRITE_DOCTYPE,
 	FrappeCheckpointSaver,
 )
-from ask_esafe_ai.ask_esafe_ai.doctype.ask_esafe_ai_conversation.ask_esafe_ai_conversation import AskESAFEAIConversation
+from ask_esafe_ai.ask_esafe_ai.doctype.ask_esafe_ai_conversation.ask_esafe_ai_conversation import ASKESAFEAIConversation
 from ask_esafe_ai.ask_esafe_ai.toolset import (
 	OPERATION_INTERRUPT_KEY,
 	ask_esafe_aiRuntime,
@@ -348,7 +348,7 @@ class IntegrationTestFrappeCheckpointSaver(IntegrationTestCase):
 			update_modified=False,
 		)
 
-		AskESAFEAIConversation.clear_old_logs(days=90)
+		ASKESAFEAIConversation.clear_old_logs(days=90)
 
 		self.assertFalse(frappe.db.exists("ASK ESAFE AI Conversation", conversation.name))
 		self._assert_no_state_for(conversation.name)

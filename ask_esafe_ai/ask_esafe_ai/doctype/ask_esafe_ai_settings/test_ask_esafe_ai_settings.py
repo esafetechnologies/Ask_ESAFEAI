@@ -162,7 +162,7 @@ class UnitTestAskESAFEAISettings(UnitTestCase):
 		)
 
 	def test_validate_rejects_unknown_llm_provider(self):
-		settings = ask_esafe_ai_settings.AskESAFEAISettings(
+		settings = ask_esafe_ai_settings.ASKESAFEAISettings(
 			{
 				"doctype": "ASK ESAFE AI Settings",
 				"llm_provider": "OpenAI Compatible",
@@ -173,7 +173,7 @@ class UnitTestAskESAFEAISettings(UnitTestCase):
 			settings.validate()
 
 	def test_validate_accepts_known_llm_provider(self):
-		settings = ask_esafe_ai_settings.AskESAFEAISettings(
+		settings = ask_esafe_ai_settings.ASKESAFEAISettings(
 			{
 				"doctype": "ASK ESAFE AI Settings",
 				"llm_provider": "anthropic",
@@ -184,7 +184,7 @@ class UnitTestAskESAFEAISettings(UnitTestCase):
 		settings.validate()
 
 	def test_validate_rejects_known_chat_model_without_function_calling(self):
-		settings = ask_esafe_ai_settings.AskESAFEAISettings(
+		settings = ask_esafe_ai_settings.ASKESAFEAISettings(
 			{
 				"doctype": "ASK ESAFE AI Settings",
 				"model": "gpt-5-chat",
@@ -196,7 +196,7 @@ class UnitTestAskESAFEAISettings(UnitTestCase):
 				settings.validate()
 
 	def test_validate_rejects_known_chat_model_without_vision_when_shared(self):
-		settings = ask_esafe_ai_settings.AskESAFEAISettings(
+		settings = ask_esafe_ai_settings.ASKESAFEAISettings(
 			{
 				"doctype": "ASK ESAFE AI Settings",
 				"vision_model_is_chat_model": 1,
@@ -215,7 +215,7 @@ class UnitTestAskESAFEAISettings(UnitTestCase):
 				settings.validate()
 
 	def test_validate_allows_unknown_chat_model_when_shared(self):
-		settings = ask_esafe_ai_settings.AskESAFEAISettings(
+		settings = ask_esafe_ai_settings.ASKESAFEAISettings(
 			{
 				"doctype": "ASK ESAFE AI Settings",
 				"vision_model_is_chat_model": 1,
@@ -227,7 +227,7 @@ class UnitTestAskESAFEAISettings(UnitTestCase):
 			settings.validate()
 
 	def test_validate_rejects_known_vision_model_without_vision_support(self):
-		settings = ask_esafe_ai_settings.AskESAFEAISettings(
+		settings = ask_esafe_ai_settings.ASKESAFEAISettings(
 			{
 				"doctype": "ASK ESAFE AI Settings",
 				"vision_model_is_chat_model": 0,
@@ -247,7 +247,7 @@ class UnitTestAskESAFEAISettings(UnitTestCase):
 				settings.validate()
 
 	def test_validate_skips_vision_model_check_when_separate_vision_model_is_not_set(self):
-		settings = ask_esafe_ai_settings.AskESAFEAISettings(
+		settings = ask_esafe_ai_settings.ASKESAFEAISettings(
 			{
 				"doctype": "ASK ESAFE AI Settings",
 				"vision_model_is_chat_model": 0,
@@ -325,7 +325,7 @@ class UnitTestAskESAFEAISettings(UnitTestCase):
 		self.assertIn("high", msgprint.call_args.args[0])
 
 	def test_validate_warns_for_unsupported_reasoning_effort(self):
-		settings = ask_esafe_ai_settings.AskESAFEAISettings(
+		settings = ask_esafe_ai_settings.ASKESAFEAISettings(
 			{
 				"doctype": "ASK ESAFE AI Settings",
 				"llm_provider": "openai",
@@ -343,7 +343,7 @@ class UnitTestAskESAFEAISettings(UnitTestCase):
 		warn.assert_called_once_with("gpt-5", "max")
 
 	def test_validate_does_not_warn_about_reasoning_effort_for_other_providers(self):
-		settings = ask_esafe_ai_settings.AskESAFEAISettings(
+		settings = ask_esafe_ai_settings.ASKESAFEAISettings(
 			{
 				"doctype": "ASK ESAFE AI Settings",
 				"llm_provider": "anthropic",
@@ -363,7 +363,7 @@ class UnitTestAskESAFEAISettings(UnitTestCase):
 
 class IntegrationTestAskESAFEAISettings(IntegrationTestCase):
 	"""
-	Integration tests for AskESAFEAISettings.
+	Integration tests for ASKESAFEAISettings.
 	Use this class for testing interactions between multiple components.
 	"""
 

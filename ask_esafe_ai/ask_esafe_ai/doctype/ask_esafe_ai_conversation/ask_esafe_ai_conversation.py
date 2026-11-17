@@ -4,7 +4,7 @@ from frappe.query_builder import Interval
 from frappe.query_builder.functions import Now
 
 
-class AskESAFEAIConversation(Document):
+class ASKESAFEAIConversation(Document):
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
 

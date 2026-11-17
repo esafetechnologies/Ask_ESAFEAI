@@ -13,7 +13,7 @@ IGNORE_TEST_RECORD_DEPENDENCIES = []  # eg. ["User"]
 
 class IntegrationTestAskESAFEAICheckpointWrite(IntegrationTestCase):
 	"""
-	Integration tests for AskESAFEAICheckpointWrite.
+	Integration tests for ASKESAFEAICheckpointWrite.
 	Use this class for testing interactions between multiple components.
 	"""
 

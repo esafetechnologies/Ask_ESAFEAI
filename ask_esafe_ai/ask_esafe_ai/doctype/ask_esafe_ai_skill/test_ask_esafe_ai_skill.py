@@ -13,7 +13,7 @@ IGNORE_TEST_RECORD_DEPENDENCIES = []  # eg. ["User"]
 
 class IntegrationTestAskESAFEAISkill(IntegrationTestCase):
 	"""
-	Integration tests for AskESAFEAISkill.
+	Integration tests for ASKESAFEAISkill.
 	Use this class for testing interactions between multiple components.
 	"""
 

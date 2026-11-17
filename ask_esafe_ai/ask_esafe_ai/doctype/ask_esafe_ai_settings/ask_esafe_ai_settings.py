@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 	from frappe.types import DF
 
 	from ask_esafe_ai.ask_esafe_ai.doctype.ask_esafe_ai_excluded_doctype.ask_esafe_ai_excluded_doctype import (
-		AskESAFEAIExcludedDocType,
+		ASKESAFEAIExcludedDocType,
 	)
 
 
@@ -62,7 +62,7 @@ NON_TEXT_MODEL_PATTERNS = (
 )
 
 
-class AskESAFEAISettings(Document):
+class ASKESAFEAISettings(Document):
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
 
@@ -72,7 +72,7 @@ class AskESAFEAISettings(Document):
 		from frappe.types import DF
 
 		from ask_esafe_ai.ask_esafe_ai.doctype.ask_esafe_ai_excluded_doctype.ask_esafe_ai_excluded_doctype import (
-			AskESAFEAIExcludedDocType,
+			ASKESAFEAIExcludedDocType,
 		)
 
 		allow_agent_mode: DF.Check
@@ -84,7 +84,7 @@ class AskESAFEAISettings(Document):
 		base_url: DF.Data | None
 		enable_tracing: DF.Check
 		enabled: DF.Check
-		excluded_doctypes: DF.TableMultiSelect[AskESAFEAIExcludedDocType]
+		excluded_doctypes: DF.TableMultiSelect[ASKESAFEAIExcludedDocType]
 		langsmith_api_key: DF.Password | None
 		langsmith_endpoint: DF.Data | None
 		langsmith_project: DF.Data | None

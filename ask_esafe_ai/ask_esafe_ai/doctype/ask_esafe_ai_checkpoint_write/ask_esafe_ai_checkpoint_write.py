@@ -6,7 +6,7 @@ from frappe.model.document import Document
 from ask_esafe_ai.ask_esafe_ai.checkpointer import checkpoint_write_row_name
 
 
-class AskESAFEAICheckpointWrite(Document):
+class ASKESAFEAICheckpointWrite(Document):
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
 
