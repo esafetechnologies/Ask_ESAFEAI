@@ -14,6 +14,7 @@ from rq.job import JobStatus
 from ask_esafe_ai.ask_esafe_ai import field_agent
 from ask_esafe_ai.ask_esafe_ai.agent import resume_operation, run_message
 from ask_esafe_ai.ask_esafe_ai.checkpointer import delete_checkpoints
+from ask_esafe_ai.ask_esafe_ai.profiles import chat_profile
 from ask_esafe_ai.ask_esafe_ai.tools import (
 	OPERATION_KIND_BACKEND,
 	OPERATION_KIND_FRONTEND,
@@ -130,6 +131,7 @@ def get_ask_esafe_ai_boot_payload() -> dict:
 		"default_mode": MODE_ASK,
 		"site_name": frappe.local.site,
 		"user": frappe.session.user,
+		"user_profile": chat_profile(frappe.session.user),
 		"settings_available": bool(settings_available),
 	}
 

@@ -235,6 +235,7 @@
 }
 
 .esafe-messaging-message {
+	position: relative;
 	width: fit-content;
 	max-width: 92%;
 	margin: 0.4rem 0;
@@ -243,6 +244,11 @@
 	border-radius: 0.55rem;
 	overflow-wrap: anywhere;
 }
+
+.esafe-messaging-message { margin-inline-start: 42px; max-width: calc(92% - 42px); }
+.esafe-messaging-message > .esafe-message-avatar { position: absolute; inset-inline-start: -42px; top: 0; }
+.esafe-messaging-message[data-own="true"] { margin-inline-end: 42px; }
+.esafe-messaging-message[data-own="true"] > .esafe-message-avatar { inset-inline-start: auto; inset-inline-end: -42px; }
 
 .esafe-messaging-message[data-own="true"] {
 	margin-inline-start: auto;

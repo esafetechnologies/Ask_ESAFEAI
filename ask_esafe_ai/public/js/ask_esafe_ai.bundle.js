@@ -1,5 +1,6 @@
 import { render as renderPele } from "pele";
 import { PurchaseOrderScan } from "./purchase_order_scan";
+import { createMessageAvatar } from "./message_avatar";
 import "./field_agent";
 
 (function () {
@@ -744,6 +745,20 @@ import "./field_agent";
 			}
 
 			const html = this.getMessageHtml(message);
+			if (message.role === "user" || message.role === "assistant") {
+				const profile = frappe.boot.ask_esafe_ai?.user_profile || frappe.boot.user || {};
+				const avatarKey = JSON.stringify([message.role, profile.full_name, profile.user_image]);
+				if (entry.avatarKey !== avatarKey) {
+					entry.avatar?.remove();
+					entry.avatar = createMessageAvatar(profile, { assistant: message.role === "assistant" });
+					entry.wrapper.prepend(entry.avatar);
+					entry.avatarKey = avatarKey;
+				}
+				entry.wrapper.classList.add("ask_esafe_ai-has-avatar");
+			} else {
+				entry.avatar?.remove();
+				entry.avatarKey = null;
+			}
 			if (entry.html !== html) {
 				entry.body.innerHTML = html;
 				entry.html = html;

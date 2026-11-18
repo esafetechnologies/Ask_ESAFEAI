@@ -1,0 +1,26 @@
+.esafe-message-avatar {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	flex: 0 0 32px;
+	border: 1px solid #cce5ee;
+	border-radius: 50%;
+	background: #dff1fa;
+	color: #0a526f;
+	font: 600 11px/1 system-ui, sans-serif;
+	overflow: hidden;
+	user-select: none;
+}
+.esafe-message-avatar img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	background: #f3f9ff;
+}
+.esafe-message-avatar[title="ASK ESAFE AI"] img { object-fit: contain; padding: 3px; }
+[data-theme="dark"] .esafe-message-avatar { background: #234254; color: #c8f4ff; border-color: #35596a; }

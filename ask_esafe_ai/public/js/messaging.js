@@ -5,6 +5,7 @@
 	const server = "/api/method/ask_esafe_ai.ask_esafe_ai.";
 	const translate = (text) => typeof window.__ === "function" ? window.__(text) : text;
 	const tabs = { messages: "Messages", notifications: "Notifications", whatsapp: "WhatsApp" };
+	let createMessageAvatar;
 
 	function element(tag, className = "", text = "") {
 		const node = document.createElement(tag);
@@ -508,6 +509,8 @@
 				const card = element("article", "esafe-messaging-message");
 				card.dataset.own = String(own);
 				const author = own ? translate("You") : row.sender || this.thread.title;
+				const profile = row.sender_profile || { full_name: author };
+				card.append(createMessageAvatar({ ...profile, full_name: profile.full_name || author }));
 				card.append(element("small", "", [author, dateLabel(row.creation), row.status && translate(row.status)]
 					.filter(Boolean).join(" · ")));
 				if (row.body) card.append(element("div", "esafe-messaging-text", row.body));
@@ -671,6 +674,11 @@
 		if (!response.ok) return;
 		const { message: access } = await response.json();
 		if (!access?.team && !access?.whatsapp) return;
+		({ createMessageAvatar } = await import(asset + "js/message_avatar.js"));
+		const avatarStyle = element("link");
+		avatarStyle.rel = "stylesheet";
+		avatarStyle.href = asset + "css/message_avatar.css";
+		document.head.append(avatarStyle);
 		const style = element("link");
 		style.rel = "stylesheet";
 		style.href = asset + "css/messaging.css";

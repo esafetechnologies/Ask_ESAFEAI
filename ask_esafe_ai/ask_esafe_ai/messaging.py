@@ -286,7 +286,10 @@ def record_files(doctype, document):
 
 
 def public_message(row, user):
+	from ask_esafe_ai.ask_esafe_ai.profiles import chat_profile
+
 	result = {key: row.get(key) for key in ("name", "sequence", "sender", "direction", "body", "status", "creation")}
+	result["sender_profile"] = chat_profile(row.sender)
 	if row.status == "Sending" and now_datetime() - get_datetime(row.modified) > timedelta(minutes=2):
 		result["status"] = "Uncertain"
 	if row.file_id:

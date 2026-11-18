@@ -568,6 +568,14 @@
 	display: flex;
 }
 
+.ask_esafe_ai-message.ask_esafe_ai-has-avatar { position: relative; min-height: 36px; }
+.ask_esafe_ai-has-avatar > .esafe-message-avatar { position: absolute; top: 3px; }
+.ask_esafe_ai-user.ask_esafe_ai-has-avatar { padding-inline-end: 42px; }
+.ask_esafe_ai-user > .esafe-message-avatar { inset-inline-end: 0; }
+.ask_esafe_ai-assistant.ask_esafe_ai-has-avatar { padding-inline-start: 42px; }
+.ask_esafe_ai-assistant > .esafe-message-avatar { inset-inline-start: 0; }
+.ask_esafe_ai-assistant.ask_esafe_ai-has-avatar .ask_esafe_ai-message-body { max-width: 100%; }
+
 .ask_esafe_ai-message-enter .ask_esafe_ai-message-body {
 	animation: ask_esafe_ai-message-enter 0.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
