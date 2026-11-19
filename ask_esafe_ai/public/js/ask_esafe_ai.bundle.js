@@ -1192,10 +1192,7 @@ import "./field_agent";
 		updatePanelPlacement() {
 			if (!this.state.open) return;
 			const rect = this.root.getBoundingClientRect();
-			this.root.classList.toggle(
-				"ask_esafe_ai-panel-left",
-				rect.left + rect.width / 2 < window.innerWidth / 2,
-			);
+			this.root.classList.toggle("ask_esafe_ai-panel-left", this.widgetCorner === "left");
 			this.root.classList.toggle("ask_esafe_ai-panel-below", rect.top < window.innerHeight / 2);
 		}
 

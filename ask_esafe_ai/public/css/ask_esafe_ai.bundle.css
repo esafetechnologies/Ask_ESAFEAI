@@ -540,6 +540,7 @@
 .ask_esafe_ai-message {
 	min-width: 0;
 	max-width: 100%;
+	flex-shrink: 0;
 }
 
 .ask_esafe_ai-message-body {
