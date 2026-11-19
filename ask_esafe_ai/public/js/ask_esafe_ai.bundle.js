@@ -1117,7 +1117,7 @@ import "./field_agent";
 			this.supportPhoneEl = root.querySelector(".ask_esafe_ai-support-phone");
 			this.positionSelectEl = root.querySelector(".ask_esafe_ai-position-select");
 			this.widgetCornerKey = "ask_esafe_ai.widget.corner.v1";
-			this.widgetCorner = "right";
+			this.widgetCorner = "left";
 			this.restoreWidgetCorner();
 			this.tabEls.forEach((tabEl) => {
 				tabEl.addEventListener("click", (event) => this.onTabClick(event));
