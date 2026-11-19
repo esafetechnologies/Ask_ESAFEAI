@@ -4,7 +4,7 @@
 	const asset = "/assets/ask_esafe_ai/";
 	const server = "/api/method/ask_esafe_ai.ask_esafe_ai.";
 	const translate = (text) => typeof window.__ === "function" ? window.__(text) : text;
-	const tabs = { messages: "Messages", notifications: "Notifications", whatsapp: "WhatsApp" };
+	const tabs = { messages: "Esafe Discuss", notifications: "Notifications", whatsapp: "WhatsApp" };
 	let createMessageAvatar;
 
 	function element(tag, className = "", text = "") {
@@ -73,6 +73,9 @@
 			this.tab = null;
 			this.thread = null;
 			this.filter = "all";
+			this.workspaceSection = "chats";
+			this.threadFilter = "all";
+			this.threadSearch = "";
 			this.history = [];
 			this.more = false;
 			this.moreAfter = false;
@@ -294,7 +297,10 @@
 			this.view.hidden = !tab;
 			if (!tab) return;
 			this.formOpen = false;
-			if (tab !== previous) this.closeThread();
+			if (tab !== previous) {
+				if (tab === "messages" || tab === "whatsapp") this.workspaceSection = "chats";
+				this.closeThread();
+			}
 			else if (!this.thread) this.renderList();
 			void this.refresh();
 		}
@@ -312,22 +318,139 @@
 				this.renderNotifications();
 				return;
 			}
-			const toolbar = element("div", "esafe-messaging-toolbar");
-			toolbar.append(element("strong", "", translate(tabs[this.tab])));
+			const workspace = element("div", "esafe-messaging-workspace");
+			const sidebar = element("aside", "esafe-messaging-sidebar");
+			const sidebarHeader = element("div", "esafe-messaging-sidebar-header");
+			const brand = element("div", "esafe-messaging-brand");
+			brand.append(element("strong", "", translate("Esafe Discuss")), element("small", "", translate("Team conversations")));
+			sidebarHeader.append(brand);
 			if (this.tab === "messages") {
-				toolbar.append(button("New chat", () => this.run(() => this.newChat())));
+				sidebarHeader.append(button("+", () => this.run(() => this.newChat()), "esafe-messaging-new-chat"));
 			}
+			const search = input("Search chats");
+			search.className = "esafe-messaging-search";
+			search.value = this.threadSearch;
+			search.addEventListener("input", () => {
+				this.threadSearch = search.value;
+				this.content.querySelectorAll(".esafe-messaging-conversation").forEach((item) => {
+					item.hidden = !item.dataset.searchTitle.includes(this.threadSearch.toLowerCase()) ||
+						(this.threadFilter === "unread" && item.dataset.unread !== "true") ||
+						(this.threadFilter === "groups" && item.dataset.kind !== "Group");
+				});
+			});
+			sidebar.append(sidebarHeader, search);
+
+			const nav = element("nav", "esafe-messaging-workspace-nav");
+			const sections = this.tab === "whatsapp" ? [["chats", "WhatsApp"]] : [["chats", "Chats"], ["groups", "Groups"]];
+			if (this.access.team) sections.push(["projects", "Projects"], ["tasks", "Tasks"]);
+			for (const [key, title] of sections) {
+				const item = button(title, () => {
+					this.workspaceSection = key;
+					this.thread = null;
+					this.formOpen = false;
+					this.renderList();
+				}, "esafe-messaging-workspace-link");
+				item.dataset.active = String(this.workspaceSection === key);
+				nav.append(item);
+			}
+			sidebar.append(nav);
+
+			const filters = element("div", "esafe-messaging-filters");
+			const filterOptions = this.tab === "whatsapp" ? [["all", "All"], ["unread", "Unread"]] :
+				[["all", "All"], ["unread", "Unread"], ["groups", "Groups"]];
+			for (const [key, title] of filterOptions) {
+				const item = button(title, () => {
+					this.threadFilter = key;
+					filters.querySelectorAll(".esafe-messaging-filter").forEach((filter) => {
+						filter.dataset.active = String(filter === item);
+					});
+					this.content.querySelectorAll(".esafe-messaging-conversation").forEach((conversation) => {
+						conversation.hidden = !conversation.dataset.searchTitle.includes(this.threadSearch.toLowerCase()) ||
+							(key === "unread" && conversation.dataset.unread !== "true") ||
+							(key === "groups" && conversation.dataset.kind !== "Group");
+					});
+				}, "esafe-messaging-filter");
+				item.dataset.active = String(this.threadFilter === key);
+				filters.append(item);
+			}
+			sidebar.append(filters);
+
 			const rows = this.data.threads.filter((row) => (row.kind === "WhatsApp") === (this.tab === "whatsapp"));
-			const list = element("div", "esafe-messaging-scroll");
-			for (const thread of rows) {
-				const item = button(thread.title, () => this.run(() => this.openThread(thread)), "esafe-messaging-list-item");
-				if (thread.unread) item.dataset.unread = "true";
-				const description = thread.kind === "WhatsApp" ? thread.assignee || translate("Unassigned") : translate(thread.kind);
-				item.append(element("small", "", description));
-				list.append(item);
+			const visibleRows = rows.filter((row) => {
+				if (this.workspaceSection === "groups" && row.kind !== "Group") return false;
+				if (this.threadFilter === "unread" && !row.unread) return false;
+				if (this.threadFilter === "groups" && row.kind !== "Group") return false;
+				return row.title.toLowerCase().includes(this.threadSearch.toLowerCase());
+			});
+			const list = element("div", "esafe-messaging-conversation-list esafe-messaging-scroll");
+			if (this.workspaceSection === "chats" || this.workspaceSection === "groups") {
+				for (const thread of visibleRows) {
+					const item = button("", () => this.run(() => this.openThread(thread)), "esafe-messaging-conversation");
+					item.dataset.unread = String(thread.unread);
+					item.dataset.active = String(this.thread?.name === thread.name);
+					item.dataset.kind = thread.kind;
+					item.dataset.searchTitle = thread.title.toLowerCase();
+					const avatar = element("span", "esafe-messaging-conversation-avatar", (thread.title || "?").trim().slice(0, 1).toUpperCase());
+					const details = element("span", "esafe-messaging-conversation-details");
+					details.append(element("strong", "", thread.title));
+					const description = thread.kind === "WhatsApp" ? thread.assignee || translate("Unassigned") : translate(thread.kind);
+					details.append(element("small", "", description));
+					item.append(avatar, details);
+					if (thread.unread) item.append(element("span", "esafe-messaging-unread-dot"));
+					list.append(item);
+				}
+				if (!visibleRows.length) list.append(element("p", "esafe-messaging-empty", translate("No conversations found.")));
+			} else {
+				list.append(element("p", "esafe-messaging-empty", translate("Open this section to browse your ERPNext workspace.")));
 			}
-			if (!rows.length) list.append(element("p", "esafe-messaging-empty", translate("No conversations yet.")));
-			this.content.append(toolbar, list);
+			sidebar.append(list);
+
+			const main = element("main", "esafe-messaging-main");
+			this.mainPane = main;
+			if (this.workspaceSection === "projects" || this.workspaceSection === "tasks") {
+				main.append(element("div", "esafe-messaging-empty-state", translate("Loading your ERPNext workspace…")));
+			} else {
+				const empty = element("div", "esafe-messaging-empty-state");
+				empty.append(element("strong", "", translate("Esafe Discuss")),
+					element("p", "", translate("Choose a conversation or start a new chat.")));
+				main.append(empty);
+			}
+			workspace.append(sidebar, main);
+			this.content.append(workspace);
+			if (this.workspaceSection === "projects" || this.workspaceSection === "tasks") {
+				void this.renderWorkspaceRecords(this.workspaceSection);
+			}
+		}
+
+		async renderWorkspaceRecords(section) {
+			const target = this.mainPane;
+			if (!target) return;
+			target.replaceChildren();
+			const heading = section === "projects" ? "Projects" : "Tasks";
+			target.append(element("div", "esafe-messaging-main-header", translate(heading)));
+			try {
+				const records = await this.call("workspace_records", { kind: section });
+				if (target !== this.mainPane || this.workspaceSection !== section) return;
+				if (!records.length) {
+					target.append(element("div", "esafe-messaging-empty-state", translate("No records are available, or you do not have permission to view them.")));
+					return;
+				}
+				const list = element("div", "esafe-messaging-record-list esafe-messaging-scroll");
+				for (const record of records) {
+					const doctype = record.doctype || (section === "projects" ? "Project" : "Task");
+					const item = button("", () => {
+						const route = doctype === "ToDo" ? "todo" : doctype.toLowerCase();
+						window.open("/app/" + route + "/" + encodeURIComponent(record.name), "_blank", "noopener");
+					}, "esafe-messaging-record");
+					item.append(element("strong", "", record.title || record.name));
+					const meta = [record.status, record.project, record.date].filter(Boolean).join(" · ");
+					if (meta) item.append(element("small", "", meta));
+					list.append(item);
+				}
+				target.append(list);
+			} catch (error) {
+				if (target === this.mainPane) target.append(element("p", "esafe-messaging-empty-state", error.message));
+			}
 		}
 
 		renderNotifications() {
@@ -384,6 +507,9 @@
 		}
 
 		async newChat() {
+			this.thread = null;
+			this.workspaceSection = "chats";
+			this.renderList();
 			const directory = await this.call("users");
 			const people = directory.filter((row) => row.name !== this.access.user);
 			const kind = select([["0", translate("Direct message")], ["1", translate("Private group")]]);
@@ -445,15 +571,16 @@
 			}
 			form.append(start);
 			this.formOpen = true;
-			this.content.replaceChildren(form);
+			this.mainPane.replaceChildren(form);
 		}
 
 		async openThread(thread, unread = false) {
 			this.formOpen = false;
 			this.thread = thread;
+			this.workspaceSection = thread.kind === "Group" ? "groups" : "chats";
+			this.renderList();
 			this.historyVersion += 1;
 			this.history = [];
-			this.content.replaceChildren();
 			const header = element("div", "esafe-messaging-toolbar");
 			header.append(button("Back", () => this.closeThread()), element("strong", "", thread.title));
 			if (thread.kind === "Group" || thread.kind === "WhatsApp") {
@@ -462,7 +589,9 @@
 			this.transcript = element("div", "esafe-messaging-scroll esafe-messaging-transcript");
 			this.transcript.setAttribute("aria-label", translate("Conversation history"));
 			this.composer = element("div", "esafe-messaging-composer");
-			this.content.append(header, this.transcript, this.composer);
+			const conversation = element("div", "esafe-messaging-conversation-view");
+			conversation.append(header, this.transcript, this.composer);
+			this.mainPane.replaceChildren(conversation);
 			await this.loadHistory({ unread });
 			if (this.thread?.name === thread.name) await this.renderComposer(thread);
 		}
@@ -580,22 +709,28 @@
 				}
 			}));
 			if (options.open) {
-				form.append(text, label("Upload a file", file));
+				form.append(text);
+				const actions = element("div", "esafe-messaging-compose-actions");
+				const attach = element("label", "esafe-messaging-attach", translate("Attach file"));
+				attach.append(file);
+				actions.append(attach);
 				if (!isWhatsApp) {
-					form.append(button("Link ERPNext attachment", () => this.run(() =>
+					actions.append(button("Link ERPNext attachment", () => this.run(() =>
 						this.chooseRecord((item) => {
 							recordFile = item?.id || null;
 							attachment.textContent = item?.label || "";
 							file.value = "";
 							resetId();
-						}))), attachment);
+						}))));
 					file.addEventListener("change", () => { recordFile = null; attachment.textContent = ""; });
 				}
+				actions.append(attachment, send);
+				form.append(actions);
 			} else {
 				form.append(element("p", "", translate("The WhatsApp reply window is closed.")), template);
+				form.append(send);
 				if (!options.templates?.length) send.disabled = true;
 			}
-			form.append(send);
 		}
 
 		async chooseRecord(chosen) {
@@ -665,7 +800,7 @@
 			}
 			if (this.thread?.name !== thread.name) return;
 			this.formOpen = true;
-			this.content.replaceChildren(form);
+			this.mainPane.replaceChildren(form);
 		}
 	}
 

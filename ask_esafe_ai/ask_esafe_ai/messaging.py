@@ -494,6 +494,61 @@ def overview():
 	}
 
 
+@frappe.whitelist(methods=["GET"])
+def workspace_records(kind):
+	"""Return ERPNext project and task records visible to the signed-in messaging user."""
+	require_role(TEAM_ROLE)
+	if kind not in {"projects", "tasks"}:
+		frappe.throw(_("Choose Projects or Tasks."))
+
+	def fetch(doctype, fields, filters=None, title_field=None, date_field=None):
+		if not frappe.db.exists("DocType", doctype) or not frappe.has_permission(doctype, "read"):
+			return []
+		rows = frappe.get_list(
+			doctype,
+			filters=filters or {},
+			fields=fields,
+			order_by="modified desc",
+			page_length=100,
+		)
+		return [
+			{
+				"doctype": doctype,
+				"name": row.name,
+				"title": strip_html(row.get(title_field) or row.name) if title_field else row.name,
+				"status": row.get("status"),
+				"project": row.get("project") or row.get("reference_name"),
+				"date": row.get(date_field) if date_field else None,
+			}
+			for row in rows
+		]
+
+	if kind == "projects":
+		return fetch(
+			"Project",
+			["name", "project_name", "status", "expected_end_date", "modified"],
+			title_field="project_name",
+			date_field="expected_end_date",
+		)
+
+	return (
+		fetch(
+			"Task",
+			["name", "subject", "status", "project", "exp_end_date", "modified"],
+			{"status": ("!=", "Completed")},
+			title_field="subject",
+			date_field="exp_end_date",
+		)
+		+ fetch(
+			"ToDo",
+			["name", "description", "status", "reference_name", "date", "modified"],
+			{"allocated_to": frappe.session.user, "status": ("!=", "Closed")},
+			title_field="description",
+			date_field="date",
+		)
+	)
+
+
 @frappe.whitelist(methods=["POST"])
 def read_notification(name):
 	if not (has_role(TEAM_ROLE) or (has_role(AGENT_ROLE) and frappe.db.get_single_value(SETTINGS, "enabled"))):

@@ -1007,7 +1007,7 @@ import "./field_agent";
 			const root = document.createElement("div");
 			root.className = "ask_esafe_ai-root";
 			root.innerHTML = `
-				<button class="ask_esafe_ai-bubble" type="button" title="${__("Open ASK ESAFE AI (drag to move)")}" aria-label="${__(
+				<button class="ask_esafe_ai-bubble" type="button" title="${__("Open ASK ESAFE AI")}" aria-label="${__(
 					"Open ASK ESAFE AI",
 				)}"><img class="ask_esafe_ai-bubble-logo" src="/assets/ask_esafe_ai/img/esafe-ai-emblem.svg" alt=""></button>
 				<div class="ask_esafe_ai-panel ask_esafe_ai-hidden">
@@ -1021,6 +1021,12 @@ import "./field_agent";
 							<button class="ask_esafe_ai-header-button ask_esafe_ai-new-chat btn btn-secondary btn-sm" type="button" title="${__(
 								"Start a new conversation",
 							)}" aria-label="${__("New chat")}">${__("New chat")}</button>
+							<label class="ask_esafe_ai-position-control">
+								<select class="ask_esafe_ai-position-select" aria-label="${__("Chat icon corner")}" title="${__("Chat icon corner")}">
+									<option value="right">${__("Right corner")}</option>
+									<option value="left">${__("Left corner")}</option>
+								</select>
+							</label>
 							<a class="ask_esafe_ai-header-button ask_esafe_ai-support-phone btn btn-secondary btn-sm ask_esafe_ai-hidden" href="#" role="button" title="${__(
 								"Call support",
 							)}" aria-label="${__("Call support")}">${getIcon("phone", "sm", "", true)}</a>
@@ -1109,11 +1115,10 @@ import "./field_agent";
 			this.modeMenuEl = root.querySelector(".ask_esafe_ai-mode-menu");
 			this.modeOptionEls = Array.from(root.querySelectorAll(".ask_esafe_ai-mode-option"));
 			this.supportPhoneEl = root.querySelector(".ask_esafe_ai-support-phone");
-			this.widgetPositionKey = "ask_esafe_ai.widget.position.v1";
-			this.widgetPosition = null;
-			this.widgetDrag = null;
-			this.suppressBubbleClick = false;
-			this.restoreWidgetPosition();
+			this.positionSelectEl = root.querySelector(".ask_esafe_ai-position-select");
+			this.widgetCornerKey = "ask_esafe_ai.widget.corner.v1";
+			this.widgetCorner = "right";
+			this.restoreWidgetCorner();
 			this.tabEls.forEach((tabEl) => {
 				tabEl.addEventListener("click", (event) => this.onTabClick(event));
 			});
@@ -1125,25 +1130,8 @@ import "./field_agent";
 			this.syncModeControl();
 			this.syncSupportPhoneAction(frappe?.boot?.ask_esafe_ai || {});
 
-			root.querySelector(".ask_esafe_ai-bubble").addEventListener("pointerdown", (event) =>
-				this.startWidgetDrag(event),
-			);
-			root.querySelector(".ask_esafe_ai-bubble").addEventListener("pointermove", (event) =>
-				this.moveWidgetDrag(event),
-			);
-			root.querySelector(".ask_esafe_ai-bubble").addEventListener("pointerup", (event) =>
-				this.endWidgetDrag(event),
-			);
-			root.querySelector(".ask_esafe_ai-bubble").addEventListener("pointercancel", (event) =>
-				this.endWidgetDrag(event),
-			);
-			root.querySelector(".ask_esafe_ai-bubble").addEventListener("click", (event) => {
-				if (this.suppressBubbleClick) {
-					this.suppressBubbleClick = false;
-					return;
-				}
-				this.toggle(true);
-			});
+			this.positionSelectEl.addEventListener("change", () => this.setWidgetCorner(this.positionSelectEl.value));
+			root.querySelector(".ask_esafe_ai-bubble").addEventListener("click", () => this.toggle(true));
 			root.querySelector(".ask_esafe_ai-close").addEventListener("click", () => this.toggle(false));
 			root.querySelector(".ask_esafe_ai-send").addEventListener("click", () => this.handleSendClick());
 			root
@@ -1169,92 +1157,47 @@ import "./field_agent";
 			this.setActiveTab(this.state.activeTab);
 		}
 
-		restoreWidgetPosition() {
+		restoreWidgetCorner() {
 			try {
-				const saved = JSON.parse(window.localStorage.getItem(this.widgetPositionKey) || "null");
-				if (
-					saved &&
-					Number.isFinite(saved.x) &&
-					Number.isFinite(saved.y) &&
-					saved.x >= 0 &&
-					saved.x <= 1 &&
-					saved.y >= 0 &&
-					saved.y <= 1
-				) {
-					this.widgetPosition = saved;
-					this.applyWidgetPosition();
-					window.addEventListener("resize", this.onWidgetViewportResize);
-				}
+				const saved = window.localStorage.getItem(this.widgetCornerKey);
+				if (saved === "left" || saved === "right") this.widgetCorner = saved;
+				window.localStorage.removeItem("ask_esafe_ai.widget.position.v1");
 			} catch (error) {
 				// Storage may be unavailable in private or restricted browser contexts.
 			}
+			this.root.style.removeProperty("left");
+			this.root.style.removeProperty("top");
+			this.root.style.removeProperty("right");
+			this.root.style.removeProperty("bottom");
+			this.applyWidgetCorner();
 		}
 
-		applyWidgetPosition() {
-			if (!this.root || !this.widgetPosition) return;
-			const rect = this.root.getBoundingClientRect();
-			const maxX = Math.max(8, window.innerWidth - rect.width - 8);
-			const maxY = Math.max(8, window.innerHeight - rect.height - 8);
-			const left = Math.min(maxX, Math.max(8, this.widgetPosition.x * maxX));
-			const top = Math.min(maxY, Math.max(8, this.widgetPosition.y * maxY));
-			this.root.style.left = `${left}px`;
-			this.root.style.top = `${top}px`;
-			this.root.style.right = "auto";
-			this.root.style.bottom = "auto";
+		applyWidgetCorner() {
+			this.root.classList.toggle("ask_esafe_ai-corner-left", this.widgetCorner === "left");
+			this.positionSelectEl.value = this.widgetCorner;
 		}
 
-		startWidgetDrag(event) {
-			if (event.button !== 0 || this.state.open) return;
-			const rect = this.root.getBoundingClientRect();
-			this.widgetDrag = {
-				pointerId: event.pointerId,
-				startX: event.clientX,
-				startY: event.clientY,
-				left: rect.left,
-				top: rect.top,
-				moved: false,
-			};
-			this.bubbleEl.setPointerCapture(event.pointerId);
-		}
-
-		moveWidgetDrag(event) {
-			const drag = this.widgetDrag;
-			if (!drag || drag.pointerId !== event.pointerId) return;
-			const dx = event.clientX - drag.startX;
-			const dy = event.clientY - drag.startY;
-			if (!drag.moved && Math.hypot(dx, dy) < 4) return;
-			drag.moved = true;
-			event.preventDefault();
-			this.root.classList.add("ask_esafe_ai-moving");
-			const rect = this.root.getBoundingClientRect();
-			const maxX = Math.max(8, window.innerWidth - rect.width - 8);
-			const maxY = Math.max(8, window.innerHeight - rect.height - 8);
-			const left = Math.min(maxX, Math.max(8, drag.left + dx));
-			const top = Math.min(maxY, Math.max(8, drag.top + dy));
-			this.root.style.left = `${left}px`;
-			this.root.style.top = `${top}px`;
-			this.root.style.right = "auto";
-			this.root.style.bottom = "auto";
-			this.widgetPosition = { x: left / maxX, y: top / maxY };
-		}
-
-		endWidgetDrag(event) {
-			const drag = this.widgetDrag;
-			if (!drag || drag.pointerId !== event.pointerId) return;
-			this.widgetDrag = null;
-			this.root.classList.remove("ask_esafe_ai-moving");
-			if (!drag.moved) return;
-			this.suppressBubbleClick = true;
+		setWidgetCorner(corner) {
+			if (corner !== "left" && corner !== "right") return;
+			this.widgetCorner = corner;
+			this.applyWidgetCorner();
 			try {
-				window.localStorage.setItem(this.widgetPositionKey, JSON.stringify(this.widgetPosition));
+				window.localStorage.setItem(this.widgetCornerKey, corner);
 			} catch (error) {
-				// The icon remains movable for this page even when storage is unavailable.
+				// The choice still applies for the current page when storage is unavailable.
 			}
-			window.setTimeout(() => (this.suppressBubbleClick = false), 0);
-			window.addEventListener("resize", this.onWidgetViewportResize);
+			this.updatePanelPlacement();
 		}
 
-		onWidgetViewportResize = () => this.applyWidgetPosition();
+		updatePanelPlacement() {
+			if (!this.state.open) return;
+			const rect = this.root.getBoundingClientRect();
+			this.root.classList.toggle(
+				"ask_esafe_ai-panel-left",
+				rect.left + rect.width / 2 < window.innerWidth / 2,
+			);
+			this.root.classList.toggle("ask_esafe_ai-panel-below", rect.top < window.innerHeight / 2);
+		}
 
 		bindRealtime() {
 			frappe.realtime.on("ask_esafe_ai_status", (message) => {
@@ -2138,14 +2081,7 @@ import "./field_agent";
 			this.panel.classList.toggle("ask_esafe_ai-hidden", !open);
 			this.bubbleEl.classList.toggle("ask_esafe_ai-hidden", open);
 			this.root.classList.toggle("ask_esafe_ai-panel-open", open);
-			if (open) {
-				const rect = this.root.getBoundingClientRect();
-				this.root.classList.toggle(
-					"ask_esafe_ai-panel-left",
-					rect.left + rect.width / 2 < window.innerWidth / 2,
-				);
-				this.root.classList.toggle("ask_esafe_ai-panel-below", rect.top < window.innerHeight / 2);
-			}
+			this.updatePanelPlacement();
 			this.closeModeMenu();
 			if (open) {
 				if (this.collaboration?.tabs.includes(this.state.activeTab)) {

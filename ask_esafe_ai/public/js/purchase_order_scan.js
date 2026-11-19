@@ -30,9 +30,16 @@ export class PurchaseOrderScan {
 		this.context = { ready: false };
 		this.busy = false;
 		this.file = null;
+		this.skills = [];
+		this.activeSkill = null;
 		this.view = node("section", "ask_esafe_ai-skill-view");
 		this.view.hidden = true;
-		this.view.append(
+		this.catalog = node("div", "ask_esafe_ai-skills-catalog");
+		this.detail = node("div", "ask_esafe_ai-skill-detail");
+		this.detail.hidden = true;
+		this.view.append(this.catalog, this.detail);
+		this.purchaseOrderView = node("div", "ask_esafe_ai-purchase-order-view");
+		this.purchaseOrderView.append(
 			node("h2", "", "Create a Purchase Order"),
 			node("p", "ask_esafe_ai-skill-intro",
 				"Upload a supplier quotation or scanned order. Review the extracted details before creating a draft."),
@@ -44,7 +51,7 @@ export class PurchaseOrderScan {
 		this.choose.type = "button";
 		this.choose.addEventListener("click", () => this.chooseDocument());
 		upload.append(this.fileName, this.choose, node("small", "", "PDF, JPG or PNG"));
-		this.view.append(upload);
+		this.purchaseOrderView.append(upload);
 		const steps = node("ol", "ask_esafe_ai-scan-steps");
 		for (const [title, description, paths] of [
 			["Scan document", "Upload a supplier quotation or scanned order.",
@@ -60,7 +67,7 @@ export class PurchaseOrderScan {
 			step.append(icon(paths), copy);
 			steps.append(step);
 		}
-		this.view.append(steps);
+		this.purchaseOrderView.append(steps);
 		this.status = node("p", "ask_esafe_ai-scan-status");
 		this.status.setAttribute("role", "status");
 		this.action = node("button", "ask_esafe_ai-scan-action", "Scan and review");
@@ -71,7 +78,7 @@ export class PurchaseOrderScan {
 		this.manage.hidden = true;
 		this.manage.addEventListener("click", () =>
 			frappe.set_route("Form", "ASK ESAFE AI Skill", this.context.skill));
-		this.view.append(this.status, this.action, this.manage);
+		this.purchaseOrderView.append(this.status, this.action, this.manage);
 		widget.panel.append(this.view);
 		const item = node("li", "nav-item");
 		const tab = node("button", "nav-link ask_esafe_ai-tab", "Skills");
@@ -83,6 +90,7 @@ export class PurchaseOrderScan {
 		item.append(tab);
 		widget.panel.querySelector(".ask_esafe_ai-tabs").append(item);
 		widget.tabEls.push(tab);
+		this.renderSkillList();
 		this.update();
 	}
 
@@ -96,18 +104,111 @@ export class PurchaseOrderScan {
 		this.refreshing = true;
 		try {
 			const response = await frappe.call({
+				method: "ask_esafe_ai.ask_esafe_ai.purchase_order_scan.list_available_skills",
+				type: "GET",
+			});
+			this.skills = response.message || [];
+			this.renderSkillList();
+		} catch (error) {
+			this.skills = [];
+			this.renderSkillList(error.message || translate("Could not load skills. Try again."));
+		} finally {
+			this.refreshing = false;
+		}
+		if (this.activeSkill === "purchase-orders-from-scans") await this.refreshPurchaseOrderContext();
+	}
+
+	renderSkillList(error = "") {
+		this.catalog.replaceChildren(
+			node("h2", "", "Skills"),
+			node("p", "ask_esafe_ai-skill-intro", "Choose a skill to get help with an ERPNext task."),
+		);
+		if (error) this.catalog.append(node("p", "ask_esafe_ai-skill-error", error));
+		const list = node("div", "ask_esafe_ai-skill-list");
+		const purchaseSkill = this.skills.find((skill) => skill.name === "purchase-orders-from-scans");
+		list.append(this.skillCard(
+			purchaseSkill || {
+				name: "purchase-orders-from-scans",
+				title: "Create Purchase Orders from scans",
+				description: "Scan a supplier quotation or order and prepare a Purchase Order draft for review.",
+			},
+		));
+		const additionalSkills = this.skills.filter((item) => item.name !== "purchase-orders-from-scans");
+		for (const skill of additionalSkills) {
+			list.append(this.skillCard(skill));
+		}
+		if (!additionalSkills.length && !error) {
+			list.append(node("p", "ask_esafe_ai-skills-empty", "More skills will appear here when they are enabled for your role."));
+		}
+		this.catalog.append(list);
+	}
+
+	skillCard(skill) {
+		const card = document.createElement("button");
+		card.type = "button";
+		card.className = "ask_esafe_ai-skill-card";
+		card.addEventListener("click", () => this.openSkill(skill));
+		card.append(node("strong", "", skill.title || skill.name));
+		const summary = (skill.description || "").replace(/[#*_`>\[\]]/g, " ").replace(/\s+/g, " ").trim();
+		card.append(node("small", "", summary || "Open this skill to see what it can do."));
+		return card;
+	}
+
+	openSkill(skill) {
+		this.activeSkill = skill.name;
+		this.catalog.hidden = true;
+		this.detail.hidden = false;
+		this.detail.replaceChildren();
+		this.detail.append(node("button", "ask_esafe_ai-skill-back", "← All skills"));
+		this.detail.querySelector(".ask_esafe_ai-skill-back").addEventListener("click", () => this.showCatalog());
+		if (skill.name === "purchase-orders-from-scans") {
+			this.detail.append(this.purchaseOrderView);
+			void this.refreshPurchaseOrderContext();
+			return;
+		}
+		this.detail.append(node("h2", "", skill.title || skill.name));
+		const description = node("div", "ask_esafe_ai-skill-description");
+		if (skill.description && typeof frappe.markdown === "function") {
+			description.innerHTML = frappe.markdown(skill.description);
+		} else {
+			description.textContent = skill.description || "No instructions have been added to this skill yet.";
+		}
+		this.detail.append(description);
+		const use = node("button", "ask_esafe_ai-skill-use", "Use this skill in Chat");
+		use.type = "button";
+		use.addEventListener("click", () => this.useSkillInChat(skill));
+		this.detail.append(use);
+	}
+
+	showCatalog() {
+		this.activeSkill = null;
+		this.detail.hidden = true;
+		this.catalog.hidden = false;
+		this.update();
+	}
+
+	useSkillInChat(skill) {
+		const prompt = `Use the ASK ESAFE AI skill named “${skill.name}” (${skill.title || skill.name}) to help me.`;
+		this.widget.setActiveTab("chat");
+		this.widget.inputEl.value = [this.widget.inputEl.value.trim(), prompt].filter(Boolean).join("\n");
+		this.widget.autoResizeInput();
+		this.widget.inputEl.focus();
+	}
+
+	async refreshPurchaseOrderContext() {
+		try {
+			const response = await frappe.call({
 				method: "ask_esafe_ai.ask_esafe_ai.purchase_order_scan.get_context",
+				type: "GET",
 			});
 			this.context = response.message;
 			this.status.textContent = this.context.reason || "";
 			this.manage.hidden = !this.context.can_manage;
-		} catch {
+		} catch (error) {
 			this.context = { ready: false };
-			this.status.textContent = translate("Could not load the scanning skill. Reopen Skills to try again.");
-		} finally {
-			this.refreshing = false;
-			this.update();
+			this.status.textContent = error.message || translate("Could not load Purchase Order scanning. Try again.");
 		}
+		this.update();
 	}
 
 	update() {
