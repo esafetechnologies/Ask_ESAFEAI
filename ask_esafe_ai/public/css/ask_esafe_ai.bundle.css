@@ -258,6 +258,8 @@
 	position: fixed;
 	right: 1.5rem;
 	bottom: 1.5rem;
+	width: 3rem;
+	height: 3rem;
 	z-index: 1031;
 	font-family: var(--font-stack);
 }
@@ -279,7 +281,19 @@
 	color: black;
 	box-shadow: 0 12px 24px rgba(60, 72, 88, 0.18);
 	font-size: 1.1rem;
+	cursor: grab;
+	touch-action: none;
 	transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s ease;
+}
+
+.ask_esafe_ai-root.ask_esafe_ai-moving,
+.ask_esafe_ai-root.ask_esafe_ai-moving * {
+	user-select: none;
+}
+
+.ask_esafe_ai-moving .ask_esafe_ai-bubble {
+	cursor: grabbing;
+	transition: none;
 }
 
 .ask_esafe_ai-bubble:hover {
@@ -315,6 +329,23 @@
 	border-radius: 1.15rem;
 	box-shadow: 0 18px 60px rgba(16, 43, 70, 0.16);
 	overflow: hidden;
+}
+
+.ask_esafe_ai-panel-open .ask_esafe_ai-panel {
+	position: absolute;
+	right: 0;
+	bottom: calc(100% + 0.75rem);
+	margin: 0;
+}
+
+.ask_esafe_ai-panel-open.ask_esafe_ai-panel-left .ask_esafe_ai-panel {
+	right: auto;
+	left: 0;
+}
+
+.ask_esafe_ai-panel-open.ask_esafe_ai-panel-below .ask_esafe_ai-panel {
+	top: calc(100% + 0.75rem);
+	bottom: auto;
 }
 
 .ask_esafe_ai-panel-pop {

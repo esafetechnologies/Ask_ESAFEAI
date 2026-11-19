@@ -1007,7 +1007,7 @@ import "./field_agent";
 			const root = document.createElement("div");
 			root.className = "ask_esafe_ai-root";
 			root.innerHTML = `
-				<button class="ask_esafe_ai-bubble" type="button" title="${__("Open ASK ESAFE AI")}" aria-label="${__(
+				<button class="ask_esafe_ai-bubble" type="button" title="${__("Open ASK ESAFE AI (drag to move)")}" aria-label="${__(
 					"Open ASK ESAFE AI",
 				)}"><img class="ask_esafe_ai-bubble-logo" src="/assets/ask_esafe_ai/img/esafe-ai-emblem.svg" alt=""></button>
 				<div class="ask_esafe_ai-panel ask_esafe_ai-hidden">
@@ -1109,6 +1109,11 @@ import "./field_agent";
 			this.modeMenuEl = root.querySelector(".ask_esafe_ai-mode-menu");
 			this.modeOptionEls = Array.from(root.querySelectorAll(".ask_esafe_ai-mode-option"));
 			this.supportPhoneEl = root.querySelector(".ask_esafe_ai-support-phone");
+			this.widgetPositionKey = "ask_esafe_ai.widget.position.v1";
+			this.widgetPosition = null;
+			this.widgetDrag = null;
+			this.suppressBubbleClick = false;
+			this.restoreWidgetPosition();
 			this.tabEls.forEach((tabEl) => {
 				tabEl.addEventListener("click", (event) => this.onTabClick(event));
 			});
@@ -1120,7 +1125,25 @@ import "./field_agent";
 			this.syncModeControl();
 			this.syncSupportPhoneAction(frappe?.boot?.ask_esafe_ai || {});
 
-			root.querySelector(".ask_esafe_ai-bubble").addEventListener("click", () => this.toggle(true));
+			root.querySelector(".ask_esafe_ai-bubble").addEventListener("pointerdown", (event) =>
+				this.startWidgetDrag(event),
+			);
+			root.querySelector(".ask_esafe_ai-bubble").addEventListener("pointermove", (event) =>
+				this.moveWidgetDrag(event),
+			);
+			root.querySelector(".ask_esafe_ai-bubble").addEventListener("pointerup", (event) =>
+				this.endWidgetDrag(event),
+			);
+			root.querySelector(".ask_esafe_ai-bubble").addEventListener("pointercancel", (event) =>
+				this.endWidgetDrag(event),
+			);
+			root.querySelector(".ask_esafe_ai-bubble").addEventListener("click", (event) => {
+				if (this.suppressBubbleClick) {
+					this.suppressBubbleClick = false;
+					return;
+				}
+				this.toggle(true);
+			});
 			root.querySelector(".ask_esafe_ai-close").addEventListener("click", () => this.toggle(false));
 			root.querySelector(".ask_esafe_ai-send").addEventListener("click", () => this.handleSendClick());
 			root
@@ -1145,6 +1168,93 @@ import "./field_agent";
 			this.purchaseOrderScan = new PurchaseOrderScan(this);
 			this.setActiveTab(this.state.activeTab);
 		}
+
+		restoreWidgetPosition() {
+			try {
+				const saved = JSON.parse(window.localStorage.getItem(this.widgetPositionKey) || "null");
+				if (
+					saved &&
+					Number.isFinite(saved.x) &&
+					Number.isFinite(saved.y) &&
+					saved.x >= 0 &&
+					saved.x <= 1 &&
+					saved.y >= 0 &&
+					saved.y <= 1
+				) {
+					this.widgetPosition = saved;
+					this.applyWidgetPosition();
+					window.addEventListener("resize", this.onWidgetViewportResize);
+				}
+			} catch (error) {
+				// Storage may be unavailable in private or restricted browser contexts.
+			}
+		}
+
+		applyWidgetPosition() {
+			if (!this.root || !this.widgetPosition) return;
+			const rect = this.root.getBoundingClientRect();
+			const maxX = Math.max(8, window.innerWidth - rect.width - 8);
+			const maxY = Math.max(8, window.innerHeight - rect.height - 8);
+			const left = Math.min(maxX, Math.max(8, this.widgetPosition.x * maxX));
+			const top = Math.min(maxY, Math.max(8, this.widgetPosition.y * maxY));
+			this.root.style.left = `${left}px`;
+			this.root.style.top = `${top}px`;
+			this.root.style.right = "auto";
+			this.root.style.bottom = "auto";
+		}
+
+		startWidgetDrag(event) {
+			if (event.button !== 0 || this.state.open) return;
+			const rect = this.root.getBoundingClientRect();
+			this.widgetDrag = {
+				pointerId: event.pointerId,
+				startX: event.clientX,
+				startY: event.clientY,
+				left: rect.left,
+				top: rect.top,
+				moved: false,
+			};
+			this.bubbleEl.setPointerCapture(event.pointerId);
+		}
+
+		moveWidgetDrag(event) {
+			const drag = this.widgetDrag;
+			if (!drag || drag.pointerId !== event.pointerId) return;
+			const dx = event.clientX - drag.startX;
+			const dy = event.clientY - drag.startY;
+			if (!drag.moved && Math.hypot(dx, dy) < 4) return;
+			drag.moved = true;
+			event.preventDefault();
+			this.root.classList.add("ask_esafe_ai-moving");
+			const rect = this.root.getBoundingClientRect();
+			const maxX = Math.max(8, window.innerWidth - rect.width - 8);
+			const maxY = Math.max(8, window.innerHeight - rect.height - 8);
+			const left = Math.min(maxX, Math.max(8, drag.left + dx));
+			const top = Math.min(maxY, Math.max(8, drag.top + dy));
+			this.root.style.left = `${left}px`;
+			this.root.style.top = `${top}px`;
+			this.root.style.right = "auto";
+			this.root.style.bottom = "auto";
+			this.widgetPosition = { x: left / maxX, y: top / maxY };
+		}
+
+		endWidgetDrag(event) {
+			const drag = this.widgetDrag;
+			if (!drag || drag.pointerId !== event.pointerId) return;
+			this.widgetDrag = null;
+			this.root.classList.remove("ask_esafe_ai-moving");
+			if (!drag.moved) return;
+			this.suppressBubbleClick = true;
+			try {
+				window.localStorage.setItem(this.widgetPositionKey, JSON.stringify(this.widgetPosition));
+			} catch (error) {
+				// The icon remains movable for this page even when storage is unavailable.
+			}
+			window.setTimeout(() => (this.suppressBubbleClick = false), 0);
+			window.addEventListener("resize", this.onWidgetViewportResize);
+		}
+
+		onWidgetViewportResize = () => this.applyWidgetPosition();
 
 		bindRealtime() {
 			frappe.realtime.on("ask_esafe_ai_status", (message) => {
@@ -2027,6 +2137,15 @@ import "./field_agent";
 			this.state.open = open;
 			this.panel.classList.toggle("ask_esafe_ai-hidden", !open);
 			this.bubbleEl.classList.toggle("ask_esafe_ai-hidden", open);
+			this.root.classList.toggle("ask_esafe_ai-panel-open", open);
+			if (open) {
+				const rect = this.root.getBoundingClientRect();
+				this.root.classList.toggle(
+					"ask_esafe_ai-panel-left",
+					rect.left + rect.width / 2 < window.innerWidth / 2,
+				);
+				this.root.classList.toggle("ask_esafe_ai-panel-below", rect.top < window.innerHeight / 2);
+			}
 			this.closeModeMenu();
 			if (open) {
 				if (this.collaboration?.tabs.includes(this.state.activeTab)) {
